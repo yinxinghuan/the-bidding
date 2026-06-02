@@ -19,6 +19,49 @@
   z-index: 1;
 }
 
+// Continue button — bottom-right, appears once a choice has been played
+.bd-continue {
+  position: absolute;
+  bottom: 14px; right: 14px;
+  z-index: 7;
+  background: rgba(20, 22, 22, 0.78);
+  border: 1px solid rgba(245, 230, 200, 0.5);
+  color: rgba(245, 230, 200, 0.95);
+  padding: 9px 16px;
+  font-family: 'Courier Prime', 'IBM Plex Mono', 'Menlo', monospace;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: lowercase;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.95);
+  pointer-events: auto;
+  animation: bd-continue-in 0.6s ease-out backwards;
+  &:active { transform: scale(0.96); }
+  &:disabled { opacity: 0.32; cursor: default; }
+}
+@keyframes bd-continue-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+// End-of-pilot marker
+.bd-done {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  background: rgba(7, 9, 10, 0.96);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Courier Prime', 'IBM Plex Mono', 'Menlo', monospace;
+  color: rgba(217, 210, 194, 0.85);
+  text-align: center;
+  pointer-events: none;
+  &__title { font-size: 16px; letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 10px; }
+  &__sub { font-size: 12px; letter-spacing: 0.16em; color: rgba(217, 210, 194, 0.55); }
+}
+
 // Top examine bar — small thumbnails of available documents
 .bd-examine-bar {
   position: absolute;

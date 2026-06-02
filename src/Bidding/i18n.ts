@@ -23,23 +23,35 @@ const STRINGS: Record<Locale, Record<string, string>> = {
     'title.act1.primary':   'Bucharest · Sector 6',
     'title.act1.secondary': '8:00 PM · Tuesday · 8 January 1991',
     'title.act1.meta':      'electricity until 11:00 PM',
+    'title.act2.primary':   'first buyer · 9:00 PM',
+    'title.act2.secondary': 'Dr. Karen Mercer · Boston, formerly',
+    'title.act2.meta':      'she takes off her coat',
 
     // ACT 1 hotspot labels (player choices)
     'hot.act1.h1': 'lock her bedroom door',
-    'hot.act1.h2': 'dress her, seat her at the table',
+    'hot.act1.h2': 'sit beside her, brush her hair',
     'hot.act1.h3': 'leave the door cracked',
 
-    // ACT 1 hint
+    // ACT 2 hotspot labels
+    'hot.act2.h4': 'agree · put the ring on the table',
+    'hot.act2.h5': '"let me think" · go check on her',
+    'hot.act2.h6': 'probe · do you really have her?',
+
+    // Hints
     'hint.act1': 'three ways to receive them',
+    'hint.act2': "three ways to answer the doctor",
 
     // Examine card captions
     'exam.e1': "Elena's appointment list, 8 January 1991",
     'exam.e2': "Paula's ECG · Spitalul Marie Curie",
     'exam.e3': 'what Elena can pay with tonight',
     'exam.e4': 'Paula, sleeping',
+    'exam.e5': "Dr. Mercer · Boston Globe · July 1986",
+    'exam.e6': "Hungarian donor referral · pediatric",
+    'exam.e7': "Klinik Sibiu · post-operative brochure",
 
     // UI
-    'btn.continue': 'continue',
+    'btn.continue': '› continue',
     'btn.examine':  'examine',
     'btn.close':    'close',
   },
@@ -47,19 +59,30 @@ const STRINGS: Record<Locale, Record<string, string>> = {
     'title.act1.primary':   '布加勒斯特 · 第 6 区',
     'title.act1.secondary': '晚 8:00 · 周二 · 1991 年 1 月 8 日',
     'title.act1.meta':      '电只到 11:00 PM',
+    'title.act2.primary':   '第一位买家 · 9:00 PM',
+    'title.act2.secondary': 'Karen Mercer 医生 · 前波士顿',
+    'title.act2.meta':      '她脱了大衣',
 
     'hot.act1.h1': '把卧室门锁上',
-    'hot.act1.h2': '给她穿好, 让她坐在桌边',
+    'hot.act1.h2': '坐在她身边,抚她头发',
     'hot.act1.h3': '把门留一道缝',
 
+    'hot.act2.h4': '同意 · 把戒指放到桌上',
+    'hot.act2.h5': "「让我想想」· 去看看她",
+    'hot.act2.h6': '试探 · 你真的有她?',
+
     'hint.act1': '三种接客方式',
+    'hint.act2': '三种回应医生的方式',
 
     'exam.e1': 'Elena 的预约名单, 1991 年 1 月 8 日',
     'exam.e2': "Paula 的心电图 · Marie Curie 医院",
     'exam.e3': 'Elena 今晚能付出的全部',
     'exam.e4': 'Paula, 睡着',
+    'exam.e5': "Mercer 医生 · 波士顿环球报 · 1986 年 7 月",
+    'exam.e6': "匈牙利捐献者档案 · 儿科",
+    'exam.e7': "Sibiu 诊所 · 术后宣传册",
 
-    'btn.continue': '继续',
+    'btn.continue': '› 继续',
     'btn.examine':  '细看',
     'btn.close':    '关闭',
   },

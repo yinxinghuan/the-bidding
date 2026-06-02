@@ -4,10 +4,15 @@
 import type { ActDef, ExamineDef, EndingDef } from './types';
 
 export const EXAMINES: Record<string, ExamineDef> = {
+  // ACT 1
   e1: { id: 'e1', src: 'stills/exam_e1_appointment_list.png', captionKey: 'exam.e1', unlockedInActs: [1] },
   e2: { id: 'e2', src: 'stills/exam_e2_paula_ecg.png',        captionKey: 'exam.e2', unlockedInActs: [1] },
   e3: { id: 'e3', src: 'stills/exam_e3_payment.png',          captionKey: 'exam.e3', unlockedInActs: [1] },
   e4: { id: 'e4', src: 'stills/exam_e4_paula_sleeping.png',   captionKey: 'exam.e4', unlockedInActs: [1] },
+  // ACT 2 — Mercer's documents on the table
+  e5: { id: 'e5', src: 'stills/exam_e5_mercer_license.png',   captionKey: 'exam.e5', unlockedInActs: [2] },
+  e6: { id: 'e6', src: 'stills/exam_e6_hungarian_donor.png',  captionKey: 'exam.e6', unlockedInActs: [2] },
+  e7: { id: 'e7', src: 'stills/exam_e7_sibiu_clinic.png',     captionKey: 'exam.e7', unlockedInActs: [2] },
 };
 
 export const ACTS: Record<number, ActDef> = {
@@ -59,6 +64,52 @@ export const ACTS: Record<number, ActDef> = {
       },
     ],
     examines: ['e1', 'e2', 'e3', 'e4'],
+  },
+
+  2: {
+    id: 2,
+    titleCard: {
+      primaryKey: 'title.act2.primary',
+      secondaryKey: 'title.act2.secondary',
+      metaKey: 'title.act2.meta',
+      bgStill: 'stills/title_act1_bg.png',
+    },
+    hero: 'hero_act2.png',
+    // 3 hotspots on the two-shot composition. Pins anchored to the body parts
+    // that perform the action (Elena's hands / her chair / Mercer's hands).
+    hotspots: [
+      {
+        id: 'act2_h4',
+        // Elena's hands / table center — the wedding-ring placement spot
+        top: 56, left: 38, width: 22, height: 16,
+        pinX: 50, pinY: 50,
+        labelKey: 'hot.act2.h4',
+        video: 'act2_h4_agree.mp4',
+        endFrame: 'end_act2_h4_agree.png',
+        mutation: { caution: -15, mercerLocked: true },
+      },
+      {
+        id: 'act2_h5',
+        // Elena's chair / bedroom doorway
+        top: 28, left: 10, width: 26, height: 50,
+        pinX: 50, pinY: 50,
+        labelKey: 'hot.act2.h5',
+        video: 'act2_h5_wait.mp4',
+        endFrame: 'end_act2_h5_wait.png',
+        mutation: { caution: +5, timeLeft: -15 },
+      },
+      {
+        id: 'act2_h6',
+        // Mercer's face — the probe target
+        top: 30, left: 56, width: 30, height: 30,
+        pinX: 50, pinY: 50,
+        labelKey: 'hot.act2.h6',
+        video: 'act2_h6_probe.mp4',
+        endFrame: 'end_act2_h6_probe.png',
+        mutation: { caution: +25, mercy: +10 },
+      },
+    ],
+    examines: ['e5', 'e6', 'e7'],
   },
 };
 

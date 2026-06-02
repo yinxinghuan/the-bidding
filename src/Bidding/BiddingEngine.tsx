@@ -17,11 +17,10 @@ const videoUrl = (rel: string) => BASE + 'videos/' + rel;
 const frameUrl = (rel: string) => BASE + 'stills/' + rel;  // end-frame fallback also lives in /stills
 
 export default function BiddingEngine() {
-  const [act, _setAct] = useState<Act>(1);
+  const [act, setAct] = useState<Act>(1);
   const [phase, setPhase] = useState<Phase>('title');
   const [, setState] = useState<BiddingState>(INITIAL_STATE);
   const [, setFlags] = useState<Flags>(INITIAL_FLAGS);
-  void _setAct;
   const [visited, setVisited] = useState<Set<string>>(new Set());
   const [examining, setExamining] = useState<string | null>(null);
   const [activeHotspot, setActiveHotspot] = useState<string | null>(null);
@@ -41,21 +40,31 @@ export default function BiddingEngine() {
     const def = currentActDef.hotspots.find((h) => h.id === activeHotspot);
     if (!def) return;
 
-    // apply state mutation
     applyMutation(def.mutation, setState, setFlags);
-
-    // mark visited
     setVisited((prev) => {
       const next = new Set(prev); next.add(activeHotspot!); return next;
     });
-
     setActiveHotspot(null);
-
-    // For ACT 1 pilot: after any choice, advance to next act (which doesn't exist yet — show stub).
-    // In the full build, only certain choices advance, others let you make more.
-    // For the pilot we go back to idle. Player can examine then choose to advance via a continue button.
     setPhase('idle');
   }, [activeHotspot, currentActDef]);
+
+  // Advance to the next act. ACT 1 → 2 → 3 → 4 → 5 → done.
+  // Continue button is only shown when ≥1 hotspot in the current act has been visited.
+  const onContinue = useCallback(() => {
+    if (act >= 5) {
+      setPhase('done');  // placeholder — ending-cluster logic comes later
+      return;
+    }
+    const nextAct = (act + 1) as Act;
+    if (!ACTS[nextAct]) {
+      // ACT not yet authored — stay put with a soft message (see render)
+      return;
+    }
+    setAct(nextAct);
+    setVisited(new Set());  // hotspots reset per act
+    setActiveHotspot(null);
+    setPhase('title');
+  }, [act]);
 
   const onExamineOpen = useCallback((examineId: string) => {
     setExamining(examineId);
@@ -162,10 +171,10 @@ export default function BiddingEngine() {
           </div>
         )}
 
-        {/* choice list at bottom (redundant + accessible — still useful when pins are tiny) */}
+        {/* choice list at bottom + continue button once a choice has been played */}
         {phase === 'idle' && (
           <ChoiceList
-            hint={t('hint.act1')}
+            hint={t(`hint.act${act}`)}
             choices={currentActDef.hotspots.map((h) => ({
               id: h.id,
               label: t(h.labelKey),
@@ -173,6 +182,31 @@ export default function BiddingEngine() {
             }))}
             onPick={onHotspotClick}
           />
+        )}
+
+        {/* Continue button — shows once at least one hotspot has been visited.
+            Tap advances to next act (TitleCard → new hero). */}
+        {phase === 'idle' && visited.size > 0 && (
+          <button
+            className="bd-continue"
+            onPointerDown={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onContinue();
+            }}
+            disabled={act >= 5 || !ACTS[(act + 1) as Act]}
+          >
+            {t('btn.continue')}
+          </button>
+        )}
+
+        {phase === 'done' && (
+          <div className="bd-done">
+            <div className="bd-done__inner">
+              <div className="bd-done__title">— end of pilot —</div>
+              <div className="bd-done__sub">ACT 3-5 and endings still to come.</div>
+            </div>
+          </div>
         )}
       </div>
     </div>
