@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import './SceneTitle.less';
 
 interface Props {
@@ -9,26 +8,13 @@ interface Props {
   cycleKey: string | number;
 }
 
-// In-scene title overlay. Sits in the upper-left of the scene as small
-// typewriter text, fades in on mount, holds for ~3 seconds, then fades out.
-// Replaces the previous full-screen black TitleCard.
+// In-scene title — persistent at top of scene. Animates in on each act
+// change. Does NOT fade out (the player needs it as a permanent anchor
+// to who/where/when they are).
 export default function SceneTitle({ primary, secondary, meta, cycleKey }: Props) {
-  const [phase, setPhase] = useState<'in' | 'hold' | 'out'>('in');
-  useEffect(() => {
-    setPhase('in');
-    const tHold = window.setTimeout(() => setPhase('hold'), 600);
-    const tOut  = window.setTimeout(() => setPhase('out'), 3600);
-    return () => { window.clearTimeout(tHold); window.clearTimeout(tOut); };
-  }, [cycleKey]);
-
   return (
-    <div
-      key={cycleKey}
-      className={`bd-scenetitle bd-scenetitle--${phase}`}
-      aria-hidden
-    >
+    <div key={cycleKey} className="bd-scenetitle" aria-hidden>
       <div className="bd-scenetitle__primary">{primary}</div>
-      {secondary && <div className="bd-scenetitle__rule" />}
       {secondary && <div className="bd-scenetitle__secondary">{secondary}</div>}
       {meta && <div className="bd-scenetitle__meta">{meta}</div>}
     </div>

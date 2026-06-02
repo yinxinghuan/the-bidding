@@ -11,6 +11,7 @@ import ExamineCard from './primitives/ExamineCard';
 import ExamineRow from './primitives/ExamineRow';
 import SceneTitle from './primitives/SceneTitle';
 import VideoStage from './primitives/VideoStage';
+import Prologue from './primitives/Prologue';
 
 const BASE = import.meta.env.BASE_URL;
 const stillUrl = (rel: string) => BASE + rel;
@@ -18,8 +19,9 @@ const videoUrl = (rel: string) => BASE + 'videos/' + rel;
 const frameUrl = (rel: string) => BASE + 'stills/' + rel;
 
 export default function BiddingEngine() {
+  const [showPrologue, setShowPrologue] = useState(true);
   const [act, setAct] = useState<Act>(1);
-  const [phase, setPhase] = useState<Phase>('idle');   // start on the hero, no black title card
+  const [phase, setPhase] = useState<Phase>('idle');
   const [, setState] = useState<BiddingState>(INITIAL_STATE);
   const [, setFlags] = useState<Flags>(INITIAL_FLAGS);
   const [visited, setVisited] = useState<Set<string>>(new Set());
@@ -33,8 +35,6 @@ export default function BiddingEngine() {
     setPhase('playing');
   }, []);
 
-  // Auto-advance after video. No black title card, no continue button — just
-  // a seamless cut to the next act's hero, with SceneTitle fading in as overlay.
   const onVideoEnded = useCallback(() => {
     if (!currentActDef || !activeHotspot) return;
     const def = currentActDef.hotspots.find((h) => h.id === activeHotspot);
@@ -68,11 +68,25 @@ export default function BiddingEngine() {
 
   const heroUrl = useMemo(() => stillUrl(currentActDef.hero), [currentActDef]);
 
+  if (showPrologue) {
+    return (
+      <Prologue
+        paragraphs={[
+          t('prologue.p1'),
+          t('prologue.p2'),
+          t('prologue.p3'),
+          t('prologue.p4'),
+          t('prologue.p5'),
+        ]}
+        ctaLabel={t('prologue.cta')}
+        onDone={() => setShowPrologue(false)}
+      />
+    );
+  }
+
   return (
     <div className="bd-root">
       <div className="bd-stage">
-        {/* hero (act background, always rendered behind everything). Fades in
-            softly each time the act changes to feel like a real scene cut. */}
         <img
           key={`hero-${act}`}
           className="bd-hero"
@@ -81,7 +95,6 @@ export default function BiddingEngine() {
           draggable={false}
         />
 
-        {/* video plays on top when active */}
         {phase === 'playing' && activeHotspot && (() => {
           const def = currentActDef.hotspots.find((h) => h.id === activeHotspot);
           if (!def) return null;
@@ -96,7 +109,6 @@ export default function BiddingEngine() {
           );
         })()}
 
-        {/* In-scene SceneTitle (top-left, fades in then out after ~3s) */}
         {(phase === 'idle' || phase === 'examining') && (
           <SceneTitle
             cycleKey={act}
@@ -106,7 +118,6 @@ export default function BiddingEngine() {
           />
         )}
 
-        {/* discreet text-only examine row in the top-right */}
         {phase === 'idle' && currentActDef.examines.length > 0 && (
           <ExamineRow
             items={currentActDef.examines
@@ -117,7 +128,6 @@ export default function BiddingEngine() {
           />
         )}
 
-        {/* hotspot pins (idle phase only) */}
         {phase === 'idle' && currentActDef.hotspots.map((h) => {
           const pinX = h.left + (h.width  * (h.pinX ?? 50) / 100);
           const pinY = h.top  + (h.height * (h.pinY ?? 50) / 100);
@@ -133,7 +143,6 @@ export default function BiddingEngine() {
           );
         })}
 
-        {/* examine card overlay (modal) */}
         {phase === 'examining' && examining && (() => {
           const def = EXAMINES[examining];
           if (!def) return null;
@@ -146,7 +155,6 @@ export default function BiddingEngine() {
           );
         })()}
 
-        {/* bottom typewriter ChoiceList — the readable text affordance for the pins */}
         {phase === 'idle' && (
           <ChoiceList
             hint={t(`hint.act${act}`)}
@@ -160,10 +168,11 @@ export default function BiddingEngine() {
         )}
 
         {phase === 'done' && (
-          <div className="bd-done">
-            <div className="bd-done__inner">
-              <div className="bd-done__title">— end of pilot —</div>
-              <div className="bd-done__sub">ACT 3-5 and endings still to come.</div>
+          <div className="bd-tbc">
+            <div className="bd-tbc__inner">
+              <div className="bd-tbc__title">{t('tbc.title')}</div>
+              <div className="bd-tbc__body">{t('tbc.body')}</div>
+              <div className="bd-tbc__note">{t('tbc.note')}</div>
             </div>
           </div>
         )}

@@ -19,13 +19,26 @@ const LOCALE: Locale = detectLocale();
 
 const STRINGS: Record<Locale, Record<string, string>> = {
   en: {
-    // Title cards
-    'title.act1.primary':   'Bucharest · Sector 6',
-    'title.act1.secondary': '8:00 PM · Tuesday · 8 January 1991',
-    'title.act1.meta':      'electricity until 11:00 PM',
-    'title.act2.primary':   'first buyer · 9:00 PM',
-    'title.act2.secondary': 'Dr. Karen Mercer · Boston, formerly',
-    'title.act2.meta':      'she takes off her coat',
+    // Prologue paragraphs
+    'prologue.p1': 'Bucharest. January 1991.',
+    'prologue.p2': 'A year after Ceaușescu was shot, the country is still trying to figure out what it is.',
+    'prologue.p3': 'Elena Marin is 38. Her husband was killed at University Square in December \'89. Her daughter Paula, 11, has weeks left unless someone finds her a heart.',
+    'prologue.p4': 'Tonight, in her third-floor apartment, four black-market buyers will visit her, one after the other. Each claims to have one for sale.',
+    'prologue.p5': 'The first knock comes at 9:00 PM.',
+    'prologue.cta': 'tap to begin',
+
+    // Scene titles — primary line, situation tagline, meta stamp
+    'title.act1.primary':   'Elena, alone',
+    'title.act1.secondary': "An hour before the first buyer. Paula's monitor reads 47.",
+    'title.act1.meta':      "Bucharest · 8:00 PM · 8 Jan 1991",
+    'title.act2.primary':   'Dr. Karen Mercer',
+    'title.act2.secondary': "American, ex-Boston. She says she has a 10-year-old's heart waiting in a Budapest hospital. $20,000 cash, tonight.",
+    'title.act2.meta':      '9:00 PM · first buyer',
+
+    // To-be-continued panel (after act 2 in the pilot build)
+    'tbc.title':  'to be continued',
+    'tbc.body':   'In the next act, the ex-Securitate officer arrives. Then the Russian. Then the priest with the truth Elena will not be able to take back. Six endings, depending on what she is willing to trade tonight.',
+    'tbc.note':   'ACT 3 — 5 are being built. Come back soon.',
 
     // ACT 1 hotspot labels (player choices)
     'hot.act1.h1': 'lock her bedroom door',
@@ -65,12 +78,23 @@ const STRINGS: Record<Locale, Record<string, string>> = {
     'btn.close':    'close',
   },
   zh: {
-    'title.act1.primary':   '布加勒斯特 · 第 6 区',
-    'title.act1.secondary': '晚 8:00 · 周二 · 1991 年 1 月 8 日',
-    'title.act1.meta':      '电只到 11:00 PM',
-    'title.act2.primary':   '第一位买家 · 9:00 PM',
-    'title.act2.secondary': 'Karen Mercer 医生 · 前波士顿',
-    'title.act2.meta':      '她脱了大衣',
+    'prologue.p1': '布加勒斯特。1991 年 1 月。',
+    'prologue.p2': 'Ceaușescu 被枪决一年后, 这个国家还在试着搞清楚自己是什么。',
+    'prologue.p3': 'Elena Marin, 38 岁。她丈夫 1989 年 12 月在 University Square 革命中被乱枪打死。女儿 Paula 11 岁, 先天心脏病, 撑不过几周, 除非有人给她一颗心。',
+    'prologue.p4': '今晚, 她三楼的公寓, 4 个黑市买家会一个接一个来。每个人都说自己有一颗。',
+    'prologue.p5': '第一声敲门, 9:00 PM。',
+    'prologue.cta': '点击开始',
+
+    'title.act1.primary':   'Elena, 独自',
+    'title.act1.secondary': '距第一个买家来还有一小时。Paula 的监护仪显示 47。',
+    'title.act1.meta':      '布加勒斯特 · 晚 8:00 · 1991 年 1 月 8 日',
+    'title.act2.primary':   'Mercer 医生',
+    'title.act2.secondary': "美国人, 前波士顿。她说布达佩斯医院有一颗 10 岁女孩的心等着。两万美元, 今晚。",
+    'title.act2.meta':      '9:00 PM · 第一个买家',
+
+    'tbc.title':  '未完待续',
+    'tbc.body':   '下一幕里, 前 Securitate 大队长来了。然后是俄国人。然后是带着 Elena 收不回真相的神父。6 种结局, 看她今晚愿意拿什么换。',
+    'tbc.note':   'ACT 3 — 5 正在制作中。请稍后回来。',
 
     'hot.act1.h1': '把卧室门锁上',
     'hot.act1.h2': '坐在她身边,抚她头发',
