@@ -57,6 +57,9 @@ export interface HotspotDef {
   // If true, after this hotspot's video ends the engine plays the MID-PIVOT
   // reveal sequence (PivotSequence primitive) BEFORE advancing to next act.
   triggersPivot?: boolean;
+  // For ACT 5 final-decision hotspots: when set, after the video ends the
+  // engine routes into the EpilogueSequence for this ending id (A-F).
+  triggersEnding?: EndingId;
 }
 
 export interface PivotStillDef {
@@ -95,8 +98,8 @@ export interface ActDef {
 
 export interface EndingDef {
   id: EndingId;
-  // predicate over the final state + flags
-  matches: (state: BiddingState, flags: Flags) => boolean;
-  video: string;          // ending video filename
+  titleKey: string;
+  taglineKey: string;
   epilogueStills: { src: string; captionKey: string }[];
+  finalCardKey: string;
 }

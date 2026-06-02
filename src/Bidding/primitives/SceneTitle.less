@@ -1,40 +1,40 @@
 .bd-scenetitle {
   position: absolute;
-  top: 16px; left: 16px;
-  max-width: 78vw;
+  top: 12px; left: 12px;
+  max-width: 64vw;
   z-index: 6;
   font-family: 'Courier Prime', 'IBM Plex Mono', 'Menlo', monospace;
   color: rgba(245, 230, 200, 0.95);
   text-shadow: 0 2px 10px rgba(0,0,0,0.9), 0 0 18px rgba(0,0,0,0.55);
   pointer-events: none;
-  padding: 10px 14px;
-  background: rgba(7, 9, 10, 0.45);
-  backdrop-filter: blur(6px) saturate(110%);
-  -webkit-backdrop-filter: blur(6px) saturate(110%);
+  padding: 8px 12px;
+  background: rgba(7, 9, 10, 0.42);
+  backdrop-filter: blur(5px) saturate(110%);
+  -webkit-backdrop-filter: blur(5px) saturate(110%);
   border-left: 2px solid rgba(245, 230, 200, 0.55);
   animation: bd-scenetitle-in 0.9s ease-out 0.4s backwards;
 
   &__primary {
-    font-size: 19px;
+    font-size: 15px;
     line-height: 1.2;
     letter-spacing: 0.10em;
     text-transform: uppercase;
     color: rgba(245, 230, 200, 0.98);
     font-weight: 400;
-    margin-bottom: 8px;
-  }
-  &__secondary {
-    font-size: 14px;
-    line-height: 1.45;
-    letter-spacing: 0.04em;
-    color: rgba(245, 230, 200, 0.82);
     margin-bottom: 6px;
   }
+  &__secondary {
+    font-size: 12px;
+    line-height: 1.45;
+    letter-spacing: 0.03em;
+    color: rgba(245, 230, 200, 0.82);
+    margin-bottom: 5px;
+  }
   &__meta {
-    font-size: 11px;
+    font-size: 10px;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: rgba(245, 230, 200, 0.55);
+    color: rgba(245, 230, 200, 0.5);
   }
 }
 

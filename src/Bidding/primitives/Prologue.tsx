@@ -4,19 +4,18 @@ import './Prologue.less';
 interface Props {
   paragraphs: string[];
   ctaLabel: string;
+  bgImageSrc?: string;     // atmospheric background still
   onDone: () => void;
 }
 
-// Black-background opening that grounds the player in the situation before
-// the first scene. Paragraphs reveal sequentially with a soft typewriter
-// fade; player taps anywhere to skip ahead to the next paragraph, or to
-// begin once all are shown.
-export default function Prologue({ paragraphs, ctaLabel, onDone }: Props) {
+// Atmospheric opening: a Romanian-New-Wave still in the background, very
+// gently zooming, with the typewriter paragraphs revealed sequentially on
+// top. Tap to skip ahead. Replaces the pure-text black-page opening.
+export default function Prologue({ paragraphs, ctaLabel, bgImageSrc, onDone }: Props) {
   const [revealed, setRevealed] = useState(1);
   const timers = useRef<number[]>([]);
 
   useEffect(() => {
-    // auto-reveal paragraphs at a comfortable pace
     paragraphs.forEach((_, i) => {
       if (i === 0) return;
       const t = window.setTimeout(() => {
@@ -29,7 +28,6 @@ export default function Prologue({ paragraphs, ctaLabel, onDone }: Props) {
 
   const onTap = () => {
     if (revealed < paragraphs.length) {
-      // reveal all remaining
       timers.current.forEach(window.clearTimeout);
       setRevealed(paragraphs.length);
       return;
@@ -39,6 +37,14 @@ export default function Prologue({ paragraphs, ctaLabel, onDone }: Props) {
 
   return (
     <div className="bd-prologue" onPointerDown={onTap}>
+      {bgImageSrc && (
+        <div
+          className="bd-prologue__bg"
+          style={{ backgroundImage: `url(${bgImageSrc})` }}
+          aria-hidden
+        />
+      )}
+      <div className="bd-prologue__veil" aria-hidden />
       <div className="bd-prologue__inner">
         {paragraphs.slice(0, revealed).map((p, i) => (
           <p key={i} className="bd-prologue__p" style={{ animationDelay: `${i * 0.05}s` }}>{p}</p>

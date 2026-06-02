@@ -4,16 +4,33 @@
   background: #07090a;
   color: rgba(217, 210, 194, 0.95);
   font-family: 'Courier Prime', 'IBM Plex Mono', 'Menlo', monospace;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+  overflow: hidden;
+
+  &__bg {
+    position: absolute; inset: 0;
+    background-size: cover;
+    background-position: center;
+    filter: blur(2px) brightness(0.42) saturate(0.85);
+    transform: scale(1.06);
+    animation: bd-prologue-zoom 22s ease-out forwards;
+  }
+
+  &__veil {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at center, rgba(7,9,10,0.4) 0%, rgba(7,9,10,0.78) 65%, rgba(7,9,10,0.94) 100%);
+  }
 
   &__inner {
+    position: relative; z-index: 2;
     max-width: 560px;
     padding: 40px 28px;
     text-align: left;
+    margin: 0 auto;
+    height: 100%;
+    display: flex; flex-direction: column; justify-content: center;
   }
 
   &__p {
@@ -21,18 +38,19 @@
     font-size: 16px;
     line-height: 1.55;
     letter-spacing: 0.04em;
-    color: rgba(217, 210, 194, 0.92);
+    color: rgba(245, 230, 200, 0.94);
     animation: bd-prologue-p-in 0.9s ease-out backwards;
-    text-shadow: 0 1px 4px rgba(0,0,0,0.7);
+    text-shadow: 0 2px 12px rgba(0,0,0,0.95), 0 0 22px rgba(0,0,0,0.7);
   }
 
   &__cta {
-    margin-top: 32px;
-    font-size: 13px;
-    letter-spacing: 0.32em;
+    margin-top: 28px;
+    font-size: 12px;
+    letter-spacing: 0.36em;
     text-transform: lowercase;
-    color: rgba(245, 230, 200, 0.6);
+    color: rgba(245, 230, 200, 0.7);
     text-align: center;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.95);
     animation: bd-prologue-cta-pulse 2.0s ease-in-out infinite;
   }
 }
@@ -45,4 +63,9 @@
 @keyframes bd-prologue-cta-pulse {
   0%, 100% { opacity: 0.45; }
   50%      { opacity: 1; }
+}
+
+@keyframes bd-prologue-zoom {
+  from { transform: scale(1.06); }
+  to   { transform: scale(1.14); }
 }

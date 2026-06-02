@@ -2,7 +2,8 @@ import { useCallback, useMemo, useState } from 'react';
 import './BiddingEngine.less';
 
 import type { Act, Phase, BiddingState, Flags, StateMutation } from './types';
-import { ACTS, EXAMINES, INITIAL_STATE, INITIAL_FLAGS, PIVOT_STILLS } from './content';
+import { ACTS, EXAMINES, INITIAL_STATE, INITIAL_FLAGS, PIVOT_STILLS, ENDINGS } from './content';
+import type { EndingId } from './types';
 import { t } from './i18n';
 
 import HotspotPin from './primitives/HotspotPin';
@@ -13,6 +14,7 @@ import SceneTitle from './primitives/SceneTitle';
 import VideoStage from './primitives/VideoStage';
 import Prologue from './primitives/Prologue';
 import PivotSequence from './primitives/PivotSequence';
+import EpilogueSequence from './primitives/EpilogueSequence';
 
 const BASE = import.meta.env.BASE_URL;
 const stillUrl = (rel: string) => BASE + rel;
@@ -31,6 +33,8 @@ export default function BiddingEngine() {
   // Narrative consequence tag from the previously played hotspot — used to
   // render a SceneTitle secondary line that explains the cause-and-effect.
   const [lastConsequence, setLastConsequence] = useState<string | null>(null);
+  // Which ending the player has triggered (null until ACT 5 choice)
+  const [endingId, setEndingId] = useState<EndingId | null>(null);
 
   const currentActDef = ACTS[act];
 
@@ -60,6 +64,14 @@ export default function BiddingEngine() {
       return;
     }
 
+    // ACT 5 final-decision hotspots route into the EpilogueSequence for the
+    // chosen ending.
+    if (def.triggersEnding) {
+      setEndingId(def.triggersEnding);
+      setPhase('ending');
+      return;
+    }
+
     const nextAct = (def.advanceTo ?? (act + 1)) as Act;
     if (nextAct > 5 || !ACTS[nextAct]) {
       setPhase('done');
@@ -69,6 +81,20 @@ export default function BiddingEngine() {
     setVisited(new Set());
     setPhase('idle');
   }, [activeHotspot, currentActDef, act]);
+
+  const onEndingComplete = useCallback(() => {
+    // Restart the game on tap of the final card
+    setEndingId(null);
+    setLastConsequence(null);
+    setVisited(new Set());
+    setExamining(null);
+    setActiveHotspot(null);
+    setState(INITIAL_STATE);
+    setFlags(INITIAL_FLAGS);
+    setAct(1);
+    setShowPrologue(true);
+    setPhase('idle');
+  }, []);
 
   const onPivotComplete = useCallback(() => {
     const nextAct = (act + 1) as Act;
@@ -104,6 +130,7 @@ export default function BiddingEngine() {
           t('prologue.p5'),
         ]}
         ctaLabel={t('prologue.cta')}
+        bgImageSrc={stillUrl('stills/title_act1_bg.png')}
         onDone={() => setShowPrologue(false)}
       />
     );
@@ -214,6 +241,23 @@ export default function BiddingEngine() {
             onComplete={onPivotComplete}
           />
         )}
+
+        {/* Ending epilogue */}
+        {phase === 'ending' && endingId && (() => {
+          const ed = ENDINGS[endingId]; if (!ed) return null;
+          return (
+            <EpilogueSequence
+              endingTitle={t(ed.titleKey)}
+              endingTagline={t(ed.taglineKey)}
+              items={ed.epilogueStills.map((s) => ({
+                src: stillUrl(s.src),
+                caption: t(s.captionKey),
+              }))}
+              finalCard={t(ed.finalCardKey)}
+              onComplete={onEndingComplete}
+            />
+          );
+        })()}
 
         {phase === 'done' && (
           <div className="bd-tbc">

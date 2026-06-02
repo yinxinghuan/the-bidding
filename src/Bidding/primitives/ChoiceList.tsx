@@ -13,11 +13,13 @@ interface Props {
   hint?: string;
 }
 
-// Bottom row of typewriter-style choice buttons. Used when hotspots aren't
-// spatial (e.g. ACT 3 dialogue) or as a redundant choice surface alongside pins.
+// Bottom typewriter choice list. Switches to a tighter 2-column layout
+// when there are 5+ choices (e.g. ACT 5's six possible last calls) so the
+// list doesn't eat the whole screen.
 export default function ChoiceList({ choices, onPick, hint }: Props) {
+  const compact = choices.length >= 5;
   return (
-    <div className="bd-choices">
+    <div className={`bd-choices ${compact ? 'is-compact' : ''}`}>
       {hint && <div className="bd-choices__hint">{hint}</div>}
       <ul className="bd-choices__list">
         {choices.map((c) => (

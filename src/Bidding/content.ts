@@ -234,9 +234,164 @@ export const ACTS: Record<number, ActDef> = {
     ],
     examines: ['e11', 'e12', 'e13'],
   },
+
+  5: {
+    id: 5,
+    titleCard: {
+      primaryKey: 'title.act5.primary',
+      secondaryKey: 'title.act5.secondary',
+      metaKey: 'title.act5.meta',
+    },
+    hero: 'hero_act5.png',
+    hotspots: [
+      {
+        id: 'act5_h20',
+        // Mercer's card position
+        top: 70, left: 30, width: 1, height: 1,
+        pinX: 50, pinY: 50,
+        labelDir: 'right',
+        labelKey: 'hot.act5.h20',
+        video: 'act5_h20_mercer.mp4',
+        endFrame: 'end_act5_h20_mercer.png',
+        mutation: {},
+        triggersEnding: 'F',  // Mercer → the replacement
+      },
+      {
+        id: 'act5_h21',
+        top: 75, left: 45, width: 1, height: 1,
+        pinX: 50, pinY: 50,
+        labelDir: 'up',
+        labelKey: 'hot.act5.h21',
+        video: 'act5_h21_antonescu.mp4',
+        endFrame: 'end_act5_h21_antonescu.png',
+        mutation: {},
+        triggersEnding: 'A',  // Antonescu → saved with cost
+      },
+      {
+        id: 'act5_h22',
+        top: 80, left: 60, width: 1, height: 1,
+        pinX: 50, pinY: 50,
+        labelDir: 'left',
+        labelKey: 'hot.act5.h22',
+        video: 'act5_h22_yuri.mp4',
+        endFrame: 'end_act5_h22_yuri.png',
+        mutation: {},
+        triggersEnding: 'C',  // Yuri → lost both
+      },
+      {
+        id: 'act5_h23',
+        top: 70, left: 75, width: 1, height: 1,
+        pinX: 50, pinY: 50,
+        labelDir: 'left',
+        labelKey: 'hot.act5.h23',
+        video: 'act5_h23_stefan.mp4',
+        endFrame: 'end_act5_h23_stefan.png',
+        mutation: {},
+        triggersEnding: 'B',  // Stefan → Vance family
+      },
+      {
+        id: 'act5_h24',
+        // Paula's body — the choice to stop
+        top: 32, left: 50, width: 1, height: 1,
+        pinX: 50, pinY: 50,
+        labelDir: 'down',
+        labelKey: 'hot.act5.h24',
+        video: 'act5_h24_stay.mp4',
+        endFrame: 'end_act5_h24_stay.png',
+        mutation: {},
+        triggersEnding: 'D',  // refuse → the mother who knew
+      },
+      {
+        id: 'act5_h25',
+        // the 070-01 paper
+        top: 60, left: 22, width: 1, height: 1,
+        pinX: 50, pinY: 50,
+        labelDir: 'right',
+        labelKey: 'hot.act5.h25',
+        video: 'act5_h25_police.mp4',
+        endFrame: 'end_act5_h25_police.png',
+        mutation: {},
+        triggersEnding: 'E',  // 070-01 → police
+      },
+    ],
+    examines: [],   // no documents in the climax — Elena has them all already
+  },
 };
 
-export const ENDINGS: Record<string, EndingDef> = {};  // populated in ACT 5 batch
+export const ENDINGS: Record<string, EndingDef> = {
+  A: {
+    id: 'A',
+    titleKey: 'ending.A.title',
+    taglineKey: 'ending.A.tagline',
+    epilogueStills: [
+      { src: 'stills/epi_a1_paula_icu.png',       captionKey: 'epi.a1' },
+      { src: 'stills/epi_a2_andrei_missing.png',  captionKey: 'epi.a2' },
+      { src: 'stills/epi_a3_mother_stairwell.png',captionKey: 'epi.a3' },
+      { src: 'stills/epi_a4_library_drawer.png',  captionKey: 'epi.a4' },
+    ],
+    finalCardKey: 'ending.A.final',
+  },
+  B: {
+    id: 'B',
+    titleKey: 'ending.B.title',
+    taglineKey: 'ending.B.tagline',
+    epilogueStills: [
+      { src: 'stills/epi_b1_lax_arrivals.png',      captionKey: 'epi.b1' },
+      { src: 'stills/epi_b2_carmel_yard.png',       captionKey: 'epi.b2' },
+      { src: 'stills/epi_b3_elena_kitchen_empty.png',captionKey: 'epi.b3' },
+      { src: 'stills/epi_b4_paula_la_bookstore.png', captionKey: 'epi.b4' },
+    ],
+    finalCardKey: 'ending.B.final',
+  },
+  C: {
+    id: 'C',
+    titleKey: 'ending.C.title',
+    taglineKey: 'ending.C.tagline',
+    epilogueStills: [
+      { src: 'stills/epi_c1_vasilenko_basement.png',captionKey: 'epi.c1' },
+      { src: 'stills/epi_c2_belu_grave.png',        captionKey: 'epi.c2' },
+      { src: 'stills/epi_c3_carmel_street.png',     captionKey: 'epi.c3' },
+      { src: 'stills/epi_c4_elena_library_alone.png',captionKey: 'epi.c4' },
+    ],
+    finalCardKey: 'ending.C.final',
+  },
+  D: {
+    id: 'D',
+    titleKey: 'ending.D.title',
+    taglineKey: 'ending.D.tagline',
+    epilogueStills: [
+      { src: 'stills/epi_d1_paula_arms.png',  captionKey: 'epi.d1' },
+      { src: 'stills/epi_d2_monitor_flat.png',captionKey: 'epi.d2' },
+      { src: 'stills/epi_d3_belu_grave_2.png',captionKey: 'epi.d3' },
+      { src: 'stills/epi_d4_elena_2010.png',  captionKey: 'epi.d4' },
+    ],
+    finalCardKey: 'ending.D.final',
+  },
+  E: {
+    id: 'E',
+    titleKey: 'ending.E.title',
+    taglineKey: 'ending.E.tagline',
+    epilogueStills: [
+      { src: 'stills/epi_e1_police_lights.png',  captionKey: 'epi.e1' },
+      { src: 'stills/epi_e2_arrest_headline.png',captionKey: 'epi.e2' },
+      { src: 'stills/epi_e3_andrei_apartment.png',captionKey: 'epi.e3' },
+      { src: 'stills/epi_e4_paula_grave_3.png',  captionKey: 'epi.e4' },
+    ],
+    finalCardKey: 'ending.E.final',
+  },
+  F: {
+    id: 'F',
+    titleKey: 'ending.F.title',
+    taglineKey: 'ending.F.tagline',
+    epilogueStills: [
+      { src: 'stills/epi_f1_sibiu_clinic_ext.png',captionKey: 'epi.f1' },
+      { src: 'stills/epi_f2_paula_smock.png',     captionKey: 'epi.f2' },
+      { src: 'stills/epi_f3_donor_document.png',  captionKey: 'epi.f3' },
+      { src: 'stills/epi_f4_sibiu_demolition.png',captionKey: 'epi.f4' },
+    ],
+    finalCardKey: 'ending.F.final',
+  },
+};
 
 // State init
 export const INITIAL_STATE = {
