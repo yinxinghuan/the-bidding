@@ -50,6 +50,10 @@ export interface HotspotDef {
   // If omitted, defaults to currentAct + 1.
   // If next act has no asset, engine stays put and shows end-of-pilot stub.
   advanceTo?: Act;
+  // Narrative consequence tag. Looked up in i18n as
+  //   `title.act{act+1}.secondary.{consequenceKey}` for the next scene's
+  // secondary line — makes the cause-and-effect of this choice visible.
+  consequenceKey?: string;
 }
 
 export interface Flags {

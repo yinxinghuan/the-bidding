@@ -28,8 +28,6 @@ export const ACTS: Record<number, ActDef> = {
     hotspots: [
       {
         id: 'act1_h1',
-        // bedroom door (back-left of frame). Label flows DOWN so it doesn't
-        // collide with the bedroom interior visible behind the pin.
         top: 35, left: 60, width: 1, height: 1,
         pinX: 50, pinY: 50,
         labelDir: 'down',
@@ -37,10 +35,10 @@ export const ACTS: Record<number, ActDef> = {
         video: 'act1_h1_hide.mp4',
         endFrame: 'end_act1_h1_hidden.png',
         mutation: { caution: +10, mercy: +5 },
+        consequenceKey: 'hidden',     // → title.act2.secondary.hidden
       },
       {
         id: 'act1_h2',
-        // Paula's chair area / bedroom interior. Label LEFT to clear Elena.
         top: 55, left: 65, width: 1, height: 1,
         pinX: 50, pinY: 50,
         labelDir: 'left',
@@ -49,10 +47,10 @@ export const ACTS: Record<number, ActDef> = {
         video: 'act1_h2_dress.mp4',
         endFrame: 'end_act1_h2_dressed.png',
         mutation: { caution: -5, mercy: -5 },
+        consequenceKey: 'seated',     // → title.act2.secondary.seated
       },
       {
         id: 'act1_h3',
-        // door crack zone (lower mid). Label RIGHT.
         top: 75, left: 35, width: 1, height: 1,
         pinX: 50, pinY: 50,
         labelDir: 'right',
@@ -61,6 +59,7 @@ export const ACTS: Record<number, ActDef> = {
         video: 'act1_h3_glimpse.mp4',
         endFrame: 'end_act1_h3_glimpse.png',
         mutation: {},
+        consequenceKey: 'glimpse',    // → title.act2.secondary.glimpse
       },
     ],
     examines: ['e1', 'e2', 'e3', 'e4'],

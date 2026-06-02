@@ -27,6 +27,9 @@ export default function BiddingEngine() {
   const [visited, setVisited] = useState<Set<string>>(new Set());
   const [examining, setExamining] = useState<string | null>(null);
   const [activeHotspot, setActiveHotspot] = useState<string | null>(null);
+  // Narrative consequence tag from the previously played hotspot — used to
+  // render a SceneTitle secondary line that explains the cause-and-effect.
+  const [lastConsequence, setLastConsequence] = useState<string | null>(null);
 
   const currentActDef = ACTS[act];
 
@@ -45,6 +48,7 @@ export default function BiddingEngine() {
       const next = new Set(prev); next.add(activeHotspot!); return next;
     });
     setActiveHotspot(null);
+    if (def.consequenceKey) setLastConsequence(def.consequenceKey);
 
     const nextAct = (def.advanceTo ?? (act + 1)) as Act;
     if (nextAct > 5 || !ACTS[nextAct]) {
@@ -109,14 +113,26 @@ export default function BiddingEngine() {
           );
         })()}
 
-        {(phase === 'idle' || phase === 'examining') && (
-          <SceneTitle
-            cycleKey={act}
-            primary={t(currentActDef.titleCard.primaryKey)}
-            secondary={t(currentActDef.titleCard.secondaryKey)}
-            meta={currentActDef.titleCard.metaKey ? t(currentActDef.titleCard.metaKey) : undefined}
-          />
-        )}
+        {(phase === 'idle' || phase === 'examining') && (() => {
+          // If the previous scene's choice tagged a consequence, prefer the
+          // consequence-tagged secondary line for THIS scene's title.
+          // Falls back to the default secondary if no consequence is tagged.
+          const base = currentActDef.titleCard.secondaryKey;
+          let secondary = t(base);
+          if (lastConsequence) {
+            const keyed = `${base}.${lastConsequence}`;
+            const tk = t(keyed);
+            if (tk !== keyed) secondary = tk;
+          }
+          return (
+            <SceneTitle
+              cycleKey={act}
+              primary={t(currentActDef.titleCard.primaryKey)}
+              secondary={secondary}
+              meta={currentActDef.titleCard.metaKey ? t(currentActDef.titleCard.metaKey) : undefined}
+            />
+          );
+        })()}
 
         {phase === 'idle' && currentActDef.examines.length > 0 && (
           <ExamineRow
