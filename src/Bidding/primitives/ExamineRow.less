@@ -1,23 +1,23 @@
 .bd-examrow {
-  // Positioned BELOW the SceneTitle (the title now spans full width).
-  // ExamineRow sits as a secondary affordance just under the title strip.
+  // Below the SceneTitle which has its own gradient. ExamineRow sits as a
+  // secondary affordance just under the title block.
   position: absolute;
-  top: 110px;
-  right: 12px;
+  top: 158px;
+  right: 22px;
   z-index: 6;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   font-family: 'Courier Prime', 'IBM Plex Mono', 'Menlo', monospace;
   font-size: 11.5px;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   color: rgba(245, 230, 200, 0.92);
   text-shadow: 0 1px 8px rgba(0,0,0,0.95);
   pointer-events: auto;
-  background: rgba(7, 9, 10, 0.55);
+  background: rgba(7, 9, 10, 0.45);
   backdrop-filter: blur(5px) saturate(110%);
   -webkit-backdrop-filter: blur(5px) saturate(110%);
-  padding: 7px 12px;
+  padding: 6px 11px;
   border-right: 2px solid rgba(245, 230, 200, 0.5);
   animation: bd-examrow-in 0.9s ease-out 0.6s backwards;
 
