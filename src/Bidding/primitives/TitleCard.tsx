@@ -12,7 +12,7 @@ interface Props {
 
 export default function TitleCard({
   primary, secondary, meta, bgStill,
-  durationMs = 3200, onDone,
+  durationMs = 2200, onDone,
 }: Props) {
   useEffect(() => {
     const t = window.setTimeout(onDone, durationMs);

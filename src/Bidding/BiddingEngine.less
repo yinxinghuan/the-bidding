@@ -62,29 +62,36 @@
   &__sub { font-size: 12px; letter-spacing: 0.16em; color: rgba(217, 210, 194, 0.55); }
 }
 
-// Top examine bar — small thumbnails of available documents
+// Discreet examine row — small thumbnails in the top-left, less intrusive
 .bd-examine-bar {
   position: absolute;
-  top: 12px; left: 12px; right: 12px;
+  top: 12px; left: 12px;
   z-index: 6;
-  display: flex; gap: 8px;
+  display: flex; gap: 6px;
   pointer-events: auto;
+  animation: bd-examine-bar-in 0.9s ease-out 0.4s backwards;
 
   &__btn {
-    flex: 1; max-width: 64px; aspect-ratio: 1 / 1;
-    padding: 2px; border: 1px solid rgba(217, 210, 194, 0.32);
-    background: rgba(7, 9, 10, 0.55);
+    width: 38px; height: 38px;
+    padding: 2px; border: 1px solid rgba(217, 210, 194, 0.28);
+    background: rgba(7, 9, 10, 0.5);
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
-    transition: border-color 0.2s ease;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
 
     img {
       width: 100%; height: 100%; object-fit: cover;
-      opacity: 0.78;
+      opacity: 0.7;
       transition: opacity 0.2s ease;
     }
     &:hover img, &:focus img { opacity: 1; }
     &:hover, &:focus { border-color: rgba(245, 230, 200, 0.7); }
-    &:active { transform: scale(0.96); }
+    &:active { transform: scale(0.94); }
   }
+}
+@keyframes bd-examine-bar-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
 }

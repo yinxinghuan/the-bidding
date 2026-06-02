@@ -28,9 +28,11 @@ export const ACTS: Record<number, ActDef> = {
     hotspots: [
       {
         id: 'act1_h1',
-        // bedroom door area (in the hero, the door is to the LEFT/center-back). approximate.
-        top: 30, left: 8, width: 25, height: 45,
-        pinX: 60, pinY: 40,
+        // bedroom door (back-left of frame). Label flows DOWN so it doesn't
+        // collide with the bedroom interior visible behind the pin.
+        top: 35, left: 60, width: 1, height: 1,
+        pinX: 50, pinY: 50,
+        labelDir: 'down',
         labelKey: 'hot.act1.h1',
         video: 'act1_h1_hide.mp4',
         endFrame: 'end_act1_h1_hidden.png',
@@ -38,12 +40,11 @@ export const ACTS: Record<number, ActDef> = {
       },
       {
         id: 'act1_h2',
-        // Paula's chair area / bedroom interior
-        top: 40, left: 35, width: 30, height: 35,
-        pinX: 50, pinY: 60,
+        // Paula's chair area / bedroom interior. Label LEFT to clear Elena.
+        top: 55, left: 65, width: 1, height: 1,
+        pinX: 50, pinY: 50,
+        labelDir: 'left',
         labelKey: 'hot.act1.h2',
-        // Snap-cut: hero → this pre-beat still → video. Beat opens with Paula
-        // already in Elena's arms beside the chair, eliding the carry-over.
         startFrame: 'stills/start_act1_h2_at_chair.png',
         video: 'act1_h2_dress.mp4',
         endFrame: 'end_act1_h2_dressed.png',
@@ -51,12 +52,11 @@ export const ACTS: Record<number, ActDef> = {
       },
       {
         id: 'act1_h3',
-        // the door crack (between two positions)
-        top: 30, left: 8, width: 50, height: 22,
-        pinX: 30, pinY: 50,
+        // door crack zone (lower mid). Label RIGHT.
+        top: 75, left: 35, width: 1, height: 1,
+        pinX: 50, pinY: 50,
+        labelDir: 'right',
         labelKey: 'hot.act1.h3',
-        // Snap-cut: hero → this pre-beat still → video. Beat opens with Elena
-        // already at the doorway, hand on the door, eliding the walk-over.
         startFrame: 'stills/start_act1_h3_at_door.png',
         video: 'act1_h3_glimpse.mp4',
         endFrame: 'end_act1_h3_glimpse.png',
@@ -75,14 +75,13 @@ export const ACTS: Record<number, ActDef> = {
       bgStill: 'stills/title_act1_bg.png',
     },
     hero: 'hero_act2.png',
-    // 3 hotspots on the two-shot composition. Pins anchored to the body parts
-    // that perform the action (Elena's hands / her chair / Mercer's hands).
     hotspots: [
       {
         id: 'act2_h4',
-        // Elena's hands / table center — the wedding-ring placement spot
-        top: 56, left: 38, width: 22, height: 16,
+        // Elena's hands at the table center → "ring" choice
+        top: 70, left: 50, width: 1, height: 1,
         pinX: 50, pinY: 50,
+        labelDir: 'down',
         labelKey: 'hot.act2.h4',
         video: 'act2_h4_agree.mp4',
         endFrame: 'end_act2_h4_agree.png',
@@ -90,9 +89,10 @@ export const ACTS: Record<number, ActDef> = {
       },
       {
         id: 'act2_h5',
-        // Elena's chair / bedroom doorway
-        top: 28, left: 10, width: 26, height: 50,
+        // Elena's body / her chair → "wait" choice. Label flows RIGHT.
+        top: 45, left: 25, width: 1, height: 1,
         pinX: 50, pinY: 50,
+        labelDir: 'right',
         labelKey: 'hot.act2.h5',
         video: 'act2_h5_wait.mp4',
         endFrame: 'end_act2_h5_wait.png',
@@ -100,9 +100,10 @@ export const ACTS: Record<number, ActDef> = {
       },
       {
         id: 'act2_h6',
-        // Mercer's face — the probe target
-        top: 30, left: 56, width: 30, height: 30,
+        // Mercer's face → "probe" choice. Label flows LEFT (Mercer is at right edge).
+        top: 40, left: 78, width: 1, height: 1,
         pinX: 50, pinY: 50,
+        labelDir: 'left',
         labelKey: 'hot.act2.h6',
         video: 'act2_h6_probe.mp4',
         endFrame: 'end_act2_h6_probe.png',

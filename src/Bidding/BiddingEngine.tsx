@@ -7,14 +7,13 @@ import { t } from './i18n';
 
 import TitleCard from './primitives/TitleCard';
 import HotspotPin from './primitives/HotspotPin';
-import ChoiceList from './primitives/ChoiceList';
 import ExamineCard from './primitives/ExamineCard';
 import VideoStage from './primitives/VideoStage';
 
 const BASE = import.meta.env.BASE_URL;
 const stillUrl = (rel: string) => BASE + rel;
 const videoUrl = (rel: string) => BASE + 'videos/' + rel;
-const frameUrl = (rel: string) => BASE + 'stills/' + rel;  // end-frame fallback also lives in /stills
+const frameUrl = (rel: string) => BASE + 'stills/' + rel;
 
 export default function BiddingEngine() {
   const [act, setAct] = useState<Act>(1);
@@ -27,7 +26,6 @@ export default function BiddingEngine() {
 
   const currentActDef = ACTS[act];
 
-  // ─── Phase transitions ────────────────────────────────────────────────────
   const onTitleDone = useCallback(() => setPhase('idle'), []);
 
   const onHotspotClick = useCallback((hotspotId: string) => {
@@ -35,6 +33,9 @@ export default function BiddingEngine() {
     setPhase('playing');
   }, []);
 
+  // When the video for a choice ends, AUTO-ADVANCE to the next act in the
+  // story. No continue button — the cinematic flow carries you forward.
+  // If the next act hasn't been authored yet, we show a soft end-of-pilot stub.
   const onVideoEnded = useCallback(() => {
     if (!currentActDef || !activeHotspot) return;
     const def = currentActDef.hotspots.find((h) => h.id === activeHotspot);
@@ -45,26 +46,16 @@ export default function BiddingEngine() {
       const next = new Set(prev); next.add(activeHotspot!); return next;
     });
     setActiveHotspot(null);
-    setPhase('idle');
-  }, [activeHotspot, currentActDef]);
 
-  // Advance to the next act. ACT 1 → 2 → 3 → 4 → 5 → done.
-  // Continue button is only shown when ≥1 hotspot in the current act has been visited.
-  const onContinue = useCallback(() => {
-    if (act >= 5) {
-      setPhase('done');  // placeholder — ending-cluster logic comes later
-      return;
-    }
-    const nextAct = (act + 1) as Act;
-    if (!ACTS[nextAct]) {
-      // ACT not yet authored — stay put with a soft message (see render)
+    const nextAct = (def.advanceTo ?? (act + 1)) as Act;
+    if (nextAct > 5 || !ACTS[nextAct]) {
+      setPhase('done');
       return;
     }
     setAct(nextAct);
-    setVisited(new Set());  // hotspots reset per act
-    setActiveHotspot(null);
+    setVisited(new Set());
     setPhase('title');
-  }, [act]);
+  }, [activeHotspot, currentActDef, act]);
 
   const onExamineOpen = useCallback((examineId: string) => {
     setExamining(examineId);
@@ -76,7 +67,6 @@ export default function BiddingEngine() {
     setPhase('idle');
   }, []);
 
-  // ─── Render helpers ───────────────────────────────────────────────────────
   const heroUrl = useMemo(() => stillUrl(currentActDef.hero), [currentActDef]);
 
   if (phase === 'title') {
@@ -97,15 +87,9 @@ export default function BiddingEngine() {
     <div className="bd-root">
       <div className="bd-stage">
         {/* hero (act background, always rendered behind everything) */}
-        <img
-          className="bd-hero"
-          src={heroUrl}
-          alt=""
-          draggable={false}
-        />
+        <img className="bd-hero" src={heroUrl} alt="" draggable={false} />
 
-        {/* video plays on top when active. Per-hotspot startFrame (compositional-
-            gap rule) becomes the poster so the snap-cut from hero is seamless. */}
+        {/* video plays on top when active */}
         {phase === 'playing' && activeHotspot && (() => {
           const def = currentActDef.hotspots.find((h) => h.id === activeHotspot);
           if (!def) return null;
@@ -120,7 +104,7 @@ export default function BiddingEngine() {
           );
         })()}
 
-        {/* hotspot pins (idle phase only) */}
+        {/* hotspot pins (idle phase only) — pill labels, no bottom choice bar */}
         {phase === 'idle' && currentActDef.hotspots.map((h) => {
           const pinX = h.left + (h.width  * (h.pinX ?? 50) / 100);
           const pinY = h.top  + (h.height * (h.pinY ?? 50) / 100);
@@ -131,6 +115,7 @@ export default function BiddingEngine() {
               y={pinY}
               label={t(h.labelKey)}
               visited={visited.has(h.id)}
+              labelDir={h.labelDir}
               onClick={() => onHotspotClick(h.id)}
             />
           );
@@ -149,7 +134,7 @@ export default function BiddingEngine() {
           );
         })()}
 
-        {/* examine bar (always rendered at top during idle) */}
+        {/* discreet examine row in the top-left corner */}
         {phase === 'idle' && currentActDef.examines.length > 0 && (
           <div className="bd-examine-bar">
             {currentActDef.examines.map((eid) => {
@@ -169,35 +154,6 @@ export default function BiddingEngine() {
               );
             })}
           </div>
-        )}
-
-        {/* choice list at bottom + continue button once a choice has been played */}
-        {phase === 'idle' && (
-          <ChoiceList
-            hint={t(`hint.act${act}`)}
-            choices={currentActDef.hotspots.map((h) => ({
-              id: h.id,
-              label: t(h.labelKey),
-              visited: visited.has(h.id),
-            }))}
-            onPick={onHotspotClick}
-          />
-        )}
-
-        {/* Continue button — shows once at least one hotspot has been visited.
-            Tap advances to next act (TitleCard → new hero). */}
-        {phase === 'idle' && visited.size > 0 && (
-          <button
-            className="bd-continue"
-            onPointerDown={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              onContinue();
-            }}
-            disabled={act >= 5 || !ACTS[(act + 1) as Act]}
-          >
-            {t('btn.continue')}
-          </button>
         )}
 
         {phase === 'done' && (

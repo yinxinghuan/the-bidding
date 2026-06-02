@@ -35,6 +35,8 @@ export interface HotspotDef {
   top: number; left: number; width: number; height: number;
   // affordance pin position within the bbox (% of bbox)
   pinX?: number; pinY?: number;
+  // direction the label flows from the pin (default 'right')
+  labelDir?: 'right' | 'left' | 'up' | 'down';
   labelKey: string;       // i18n key for choice label
   // pre-beat start frame: shown for ~200ms before video plays (snap-cut).
   // Required when the beat's opening state ≠ hero composition.
@@ -44,6 +46,10 @@ export interface HotspotDef {
   endFrame?: string;      // filename in /public/stills/ (also fallback if video fails)
   mutation: StateMutation;
   unlockIf?: (state: BiddingState, flags: Flags) => boolean;
+  // After this hotspot's video plays, advance to this act number.
+  // If omitted, defaults to currentAct + 1.
+  // If next act has no asset, engine stays put and shows end-of-pilot stub.
+  advanceTo?: Act;
 }
 
 export interface Flags {
