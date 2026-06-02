@@ -164,7 +164,6 @@ export default function BiddingEngine() {
         {(phase === 'idle' || phase === 'examining') && (() => {
           // If the previous scene's choice tagged a consequence, prefer the
           // consequence-tagged secondary line for THIS scene's title.
-          // Falls back to the default secondary if no consequence is tagged.
           const base = currentActDef.titleCard.secondaryKey;
           let secondary = t(base);
           if (lastConsequence) {
@@ -172,25 +171,24 @@ export default function BiddingEngine() {
             const tk = t(keyed);
             if (tk !== keyed) secondary = tk;
           }
+          const examineItems = currentActDef.examines
+            .map((eid) => EXAMINES[eid])
+            .filter(Boolean)
+            .map((def) => ({ id: def.id, shortLabel: t(def.shortKey) }));
           return (
             <SceneTitle
               cycleKey={act}
               primary={t(currentActDef.titleCard.primaryKey)}
               secondary={secondary}
               meta={currentActDef.titleCard.metaKey ? t(currentActDef.titleCard.metaKey) : undefined}
+              examines={
+                phase === 'idle' && examineItems.length > 0
+                  ? <ExamineRow items={examineItems} onPick={onExamineOpen} />
+                  : undefined
+              }
             />
           );
         })()}
-
-        {phase === 'idle' && currentActDef.examines.length > 0 && (
-          <ExamineRow
-            items={currentActDef.examines
-              .map((eid) => EXAMINES[eid])
-              .filter(Boolean)
-              .map((def) => ({ id: def.id, shortLabel: t(def.shortKey) }))}
-            onPick={onExamineOpen}
-          />
-        )}
 
         {phase === 'idle' && currentActDef.hotspots.map((h) => {
           const pinX = h.left + (h.width  * (h.pinX ?? 50) / 100);

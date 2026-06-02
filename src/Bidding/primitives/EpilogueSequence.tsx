@@ -15,14 +15,16 @@ interface Props {
   autoMs?: number;
 }
 
-// Final "what happened next" sequence. 4-5 stills, longer Joan-Didion
-// captions, ends with a small title-card naming the ending. Tap to advance.
+// Final "what happened next" sequence. 4-5 stills, longer captions.
+// Each still WAITS for its image to finish loading before starting the
+// auto-advance timer. Tap anywhere to advance early.
 export default function EpilogueSequence({
   endingTitle, endingTagline, items, finalCard, onComplete, autoMs = 5500,
 }: Props) {
   // -1 = the opening ending-name card; 0..n-1 = stills; n = final-card
   const [idx, setIdx] = useState(-1);
   const [revealCaption, setRevealCaption] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState(false);
 
   const advance = useCallback(() => {
     if (idx >= items.length) {
@@ -30,34 +32,41 @@ export default function EpilogueSequence({
       return;
     }
     setRevealCaption(false);
+    setImgLoaded(false);
     setIdx((i) => i + 1);
   }, [idx, items.length, onComplete]);
 
-  useEffect(() => {
-    // Ending title card lingers slightly longer than each still
-    const isTitle = idx === -1;
-    const isFinal = idx === items.length;
-    const dwell = isTitle ? 3200 : isFinal ? 6000 : autoMs;
-    const t1 = window.setTimeout(() => setRevealCaption(true), 700);
-    const t2 = window.setTimeout(advance, dwell);
-    return () => { window.clearTimeout(t1); window.clearTimeout(t2); };
-  }, [idx, advance, autoMs, items.length]);
+  const isTitle = idx === -1;
+  const isFinal = idx === items.length;
+  const isStill = !isTitle && !isFinal;
 
-  // Opening ending-name card
-  if (idx === -1) {
+  useEffect(() => {
+    const t = window.setTimeout(() => setRevealCaption(true), 700);
+    return () => window.clearTimeout(t);
+  }, [idx]);
+
+  useEffect(() => {
+    // Auto-advance: for stills, only after image loads
+    if (isStill && !imgLoaded) return;
+    const dwell = isTitle ? 3500 : isFinal ? 7000 : autoMs;
+    const t = window.setTimeout(advance, dwell);
+    return () => window.clearTimeout(t);
+  }, [idx, isStill, isTitle, isFinal, imgLoaded, autoMs, advance]);
+
+  if (isTitle) {
     return (
       <div className="bd-epi" onPointerDown={(e) => { e.preventDefault(); advance(); }}>
         <div className="bd-epi__titlecard">
           <div className="bd-epi__title-mini">— ending —</div>
           <div className={`bd-epi__title-main ${revealCaption ? 'is-in' : ''}`}>{endingTitle}</div>
           <div className={`bd-epi__title-tagline ${revealCaption ? 'is-in' : ''}`}>{endingTagline}</div>
+          <div className="bd-epi__continue">› tap to continue</div>
         </div>
       </div>
     );
   }
 
-  // Final closing card
-  if (idx >= items.length) {
+  if (isFinal) {
     return (
       <div className="bd-epi" onPointerDown={(e) => { e.preventDefault(); advance(); }}>
         <div className="bd-epi__finalcard">
@@ -69,23 +78,28 @@ export default function EpilogueSequence({
     );
   }
 
-  // Mid-sequence still
   const item = items[idx];
   return (
     <div className="bd-epi" onPointerDown={(e) => { e.preventDefault(); advance(); }}>
       <img
         key={`epi-${idx}`}
-        className="bd-epi__img"
+        className={`bd-epi__img ${imgLoaded ? 'is-loaded' : ''}`}
         src={item.src}
         alt=""
         draggable={false}
+        onLoad={() => setImgLoaded(true)}
+        onError={() => setImgLoaded(true)}
       />
-      <div className={`bd-epi__caption ${revealCaption ? 'is-in' : ''}`}>{item.caption}</div>
+      {!imgLoaded && <div className="bd-epi__loading">…</div>}
+      <div className={`bd-epi__caption ${revealCaption && imgLoaded ? 'is-in' : ''}`}>
+        {item.caption}
+      </div>
       <div className="bd-epi__progress" aria-hidden>
         {items.map((_, i) => (
           <span key={i} className={i <= idx ? 'is-on' : ''} />
         ))}
       </div>
+      {imgLoaded && <div className="bd-epi__continue">› tap to continue</div>}
     </div>
   );
 }

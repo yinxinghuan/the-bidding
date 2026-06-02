@@ -16,15 +16,16 @@ interface Props {
   autoMs?: number;
 }
 
-// MID-PIVOT reveal: an intro card explaining what Elena is doing, then a
-// series of stills with captions, then a closing card with the realization.
-// Tap to advance early.
+// MID-PIVOT reveal: intro card, then a series of stills, then a closing card.
+// Each still WAITS for the image to finish loading before starting the
+// auto-advance timer (no more flipping past a blank frame).
+// Tap anywhere to advance early.
 export default function PivotSequence({
   introTitle, introBody, items, closingTitle, closingBody, onComplete, autoMs = 6500,
 }: Props) {
-  // -1 = intro card; 0..n-1 = stills; n = closing card; n+1 = done
   const [idx, setIdx] = useState(-1);
   const [revealCaption, setRevealCaption] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState(false);
 
   const advance = useCallback(() => {
     if (idx >= items.length) {
@@ -32,37 +33,50 @@ export default function PivotSequence({
       return;
     }
     setRevealCaption(false);
+    setImgLoaded(false);
     setIdx((i) => i + 1);
   }, [idx, items.length, onComplete]);
 
-  useEffect(() => {
-    const isIntro = idx === -1;
-    const isClosing = idx === items.length;
-    const dwell = isIntro ? 4500 : isClosing ? 7000 : autoMs;
-    const t1 = window.setTimeout(() => setRevealCaption(true), 700);
-    const t2 = window.setTimeout(advance, dwell);
-    return () => { window.clearTimeout(t1); window.clearTimeout(t2); };
-  }, [idx, advance, autoMs, items.length]);
+  // Determine the dwell phase
+  const isIntro = idx === -1;
+  const isClosing = idx === items.length;
+  const isStill = !isIntro && !isClosing;
 
-  if (idx === -1) {
+  useEffect(() => {
+    // Caption reveal animation start
+    const t1 = window.setTimeout(() => setRevealCaption(true), 700);
+    return () => window.clearTimeout(t1);
+  }, [idx]);
+
+  useEffect(() => {
+    // Auto-advance timer — for stills it only starts AFTER the image loads
+    if (isStill && !imgLoaded) return;
+    const dwell = isIntro ? 4500 : isClosing ? 7000 : autoMs;
+    const t = window.setTimeout(advance, dwell);
+    return () => window.clearTimeout(t);
+  }, [idx, isStill, isIntro, isClosing, imgLoaded, autoMs, advance]);
+
+  if (isIntro) {
     return (
       <div className="bd-pivot" onPointerDown={(e) => { e.preventDefault(); advance(); }}>
         <div className="bd-pivot__intro">
           <div className="bd-pivot__intro-mini">— she remembers —</div>
           <div className={`bd-pivot__intro-title ${revealCaption ? 'is-in' : ''}`}>{introTitle}</div>
           <div className={`bd-pivot__intro-body ${revealCaption ? 'is-in' : ''}`}>{introBody}</div>
+          <div className="bd-pivot__continue">› tap to continue</div>
         </div>
       </div>
     );
   }
 
-  if (idx >= items.length) {
+  if (isClosing) {
     return (
       <div className="bd-pivot" onPointerDown={(e) => { e.preventDefault(); advance(); }}>
         <div className="bd-pivot__closing">
           <div className="bd-pivot__closing-mini">— she understands —</div>
           <div className={`bd-pivot__closing-title ${revealCaption ? 'is-in' : ''}`}>{closingTitle}</div>
           <div className={`bd-pivot__closing-body ${revealCaption ? 'is-in' : ''}`}>{closingBody}</div>
+          <div className="bd-pivot__continue">› tap to continue</div>
         </div>
       </div>
     );
@@ -73,17 +87,23 @@ export default function PivotSequence({
     <div className="bd-pivot" onPointerDown={(e) => { e.preventDefault(); advance(); }}>
       <img
         key={`pivot-${idx}`}
-        className="bd-pivot__img"
+        className={`bd-pivot__img ${imgLoaded ? 'is-loaded' : ''}`}
         src={item.src}
         alt=""
         draggable={false}
+        onLoad={() => setImgLoaded(true)}
+        onError={() => setImgLoaded(true)}
       />
-      <div className={`bd-pivot__caption ${revealCaption ? 'is-in' : ''}`}>{item.caption}</div>
+      {!imgLoaded && <div className="bd-pivot__loading">…</div>}
+      <div className={`bd-pivot__caption ${revealCaption && imgLoaded ? 'is-in' : ''}`}>
+        {item.caption}
+      </div>
       <div className="bd-pivot__progress" aria-hidden>
         {items.map((_, i) => (
           <span key={i} className={i <= idx ? 'is-on' : ''} />
         ))}
       </div>
+      {imgLoaded && <div className="bd-pivot__continue">› tap to continue</div>}
     </div>
   );
 }

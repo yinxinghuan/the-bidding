@@ -1,24 +1,15 @@
 .bd-examrow {
-  // Below the SceneTitle which has its own gradient. ExamineRow sits as a
-  // secondary affordance just under the title block.
-  position: absolute;
-  top: 158px;
-  right: 22px;
-  z-index: 6;
+  // Now rendered INLINE inside the SceneTitle block. No fixed position.
   display: flex;
   align-items: center;
-  gap: 8px;
+  flex-wrap: wrap;
+  gap: 8px 10px;
   font-family: 'Courier Prime', 'IBM Plex Mono', 'Menlo', monospace;
   font-size: 11.5px;
   letter-spacing: 0.16em;
-  color: rgba(245, 230, 200, 0.92);
+  color: rgba(245, 230, 200, 0.88);
   text-shadow: 0 1px 8px rgba(0,0,0,0.95);
   pointer-events: auto;
-  background: rgba(7, 9, 10, 0.45);
-  backdrop-filter: blur(5px) saturate(110%);
-  -webkit-backdrop-filter: blur(5px) saturate(110%);
-  padding: 6px 11px;
-  border-right: 2px solid rgba(245, 230, 200, 0.5);
   animation: bd-examrow-in 0.9s ease-out 0.6s backwards;
 
   &__head {
@@ -27,14 +18,14 @@
     margin-right: 4px;
   }
 
-  &__cell { display: inline-flex; align-items: baseline; gap: 8px; }
+  &__cell { display: inline-flex; align-items: center; gap: 8px; }
 
   &__sep { color: rgba(245, 230, 200, 0.3); }
 
   &__btn {
     background: transparent;
     border: 0;
-    padding: 4px 2px;
+    padding: 6px 4px;
     color: inherit;
     font-family: inherit;
     font-size: inherit;
@@ -43,11 +34,12 @@
     -webkit-tap-highlight-color: transparent;
     text-transform: lowercase;
     transition: color 0.2s ease;
+    min-height: 32px;
     &:hover, &:focus {
       color: rgba(255, 245, 215, 1);
       text-decoration: underline;
       text-underline-offset: 4px;
-      text-decoration-color: rgba(245, 230, 200, 0.55);
+      text-decoration-color: rgba(245, 230, 200, 0.6);
     }
     &:active { transform: scale(0.96); }
   }
