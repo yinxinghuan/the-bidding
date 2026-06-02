@@ -1,0 +1,40 @@
+.bd-scenetitle {
+  position: absolute;
+  top: 14px; left: 14px;
+  max-width: 70vw;
+  z-index: 6;
+  font-family: 'Courier Prime', 'IBM Plex Mono', 'Menlo', monospace;
+  color: rgba(245, 230, 200, 0.95);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.9), 0 0 18px rgba(0,0,0,0.6);
+  pointer-events: none;
+  transition: opacity 0.9s ease;
+  opacity: 0;
+
+  &--in   { opacity: 0; animation: bd-scenetitle-in 0.9s ease-out forwards; }
+  &--hold { opacity: 1; }
+  &--out  { opacity: 0; }
+
+  &__primary {
+    font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: rgba(245, 230, 200, 0.95);
+  }
+  &__rule {
+    width: 28px; height: 1px;
+    background: rgba(245, 230, 200, 0.45);
+    margin: 8px 0;
+  }
+  &__secondary {
+    font-size: 11px; letter-spacing: 0.16em;
+    color: rgba(245, 230, 200, 0.78);
+    margin-bottom: 4px;
+  }
+  &__meta {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(245, 230, 200, 0.5);
+  }
+}
+
+@keyframes bd-scenetitle-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

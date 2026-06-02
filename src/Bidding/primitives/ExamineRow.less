@@ -1,0 +1,51 @@
+.bd-examrow {
+  position: absolute;
+  top: 14px; right: 14px;
+  z-index: 6;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-family: 'Courier Prime', 'IBM Plex Mono', 'Menlo', monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: rgba(245, 230, 200, 0.85);
+  text-shadow: 0 1px 8px rgba(0,0,0,0.95);
+  pointer-events: auto;
+  animation: bd-examrow-in 0.9s ease-out 0.6s backwards;
+
+  &__head {
+    color: rgba(245, 230, 200, 0.45);
+    text-transform: lowercase;
+    margin-right: 4px;
+  }
+
+  &__cell { display: inline-flex; align-items: baseline; gap: 8px; }
+
+  &__sep { color: rgba(245, 230, 200, 0.3); }
+
+  &__btn {
+    background: transparent;
+    border: 0;
+    padding: 4px 2px;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    letter-spacing: inherit;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    text-transform: lowercase;
+    transition: color 0.2s ease;
+    &:hover, &:focus {
+      color: rgba(255, 245, 215, 1);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      text-decoration-color: rgba(245, 230, 200, 0.55);
+    }
+    &:active { transform: scale(0.96); }
+  }
+}
+
+@keyframes bd-examrow-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

@@ -50,6 +50,15 @@ const STRINGS: Record<Locale, Record<string, string>> = {
     'exam.e6': "Hungarian donor referral · pediatric",
     'exam.e7': "Klinik Sibiu · post-operative brochure",
 
+    // Short labels for the inline ExamineRow (1-2 words each)
+    'short.e1': 'the list',
+    'short.e2': 'her ECG',
+    'short.e3': 'the purse',
+    'short.e4': 'Paula',
+    'short.e5': 'the clipping',
+    'short.e6': 'the donor',
+    'short.e7': 'the clinic',
+
     // UI
     'btn.continue': '› continue',
     'btn.examine':  'examine',
@@ -81,6 +90,14 @@ const STRINGS: Record<Locale, Record<string, string>> = {
     'exam.e5': "Mercer 医生 · 波士顿环球报 · 1986 年 7 月",
     'exam.e6': "匈牙利捐献者档案 · 儿科",
     'exam.e7': "Sibiu 诊所 · 术后宣传册",
+
+    'short.e1': '名单',
+    'short.e2': '心电图',
+    'short.e3': '钱包',
+    'short.e4': 'Paula',
+    'short.e5': '剪报',
+    'short.e6': '捐献者',
+    'short.e7': '诊所',
 
     'btn.continue': '› 继续',
     'btn.examine':  '细看',

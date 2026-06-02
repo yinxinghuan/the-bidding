@@ -1,99 +1,69 @@
-// Pill-shaped hotspot affordance. Pin dot + always-visible typewriter label.
 .bd-pin {
   position: absolute;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 7px 14px 7px 8px;
-  background: rgba(7, 9, 10, 0.62);
-  border: 1px solid rgba(245, 230, 200, 0.32);
-  color: rgba(245, 230, 200, 0.95);
-  border-radius: 99px;
-  font-family: 'Courier Prime', 'IBM Plex Mono', 'Menlo', monospace;
-  font-size: 12.5px;
-  letter-spacing: 0.06em;
-  text-transform: lowercase;
+  width: 44px; height: 44px;
+  margin: -22px 0 0 -22px;
+  background: transparent;
+  border: 0;
+  padding: 0;
   cursor: pointer;
   pointer-events: auto;
   -webkit-tap-highlight-color: transparent;
   z-index: 5;
-  white-space: nowrap;
-  backdrop-filter: blur(6px) saturate(120%);
-  -webkit-backdrop-filter: blur(6px) saturate(120%);
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.95);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
-  // Soft entry from below
-  animation: bd-pin-in 0.7s ease-out backwards;
+  font-family: 'Courier Prime', 'IBM Plex Mono', 'Menlo', monospace;
+  animation: bd-pin-in 0.7s ease-out 0.2s backwards;
 
-  // Pin is positioned so the DOT sits at (x, y), and the label trails in labelDir.
-  // We achieve this with anchor-style translate offsets per direction.
-  &--right { transform: translate(-8px, -50%); animation-delay: 0.15s; }
-  &--left  { transform: translate(calc(-100% + 8px), -50%); flex-direction: row-reverse;
-             animation-delay: 0.15s;
-             .bd-pin__caret { transform: rotate(180deg); } }
-  &--up    { transform: translate(-50%, calc(-100% + 8px)); flex-direction: column-reverse;
-             animation-delay: 0.15s;
-             .bd-pin__caret { transform: rotate(-90deg); } }
-  &--down  { transform: translate(-50%, -8px); flex-direction: column;
-             animation-delay: 0.15s;
-             .bd-pin__caret { transform: rotate(90deg); } }
+  &__rings {
+    position: absolute; inset: 0; pointer-events: none;
+    i {
+      position: absolute; inset: 12px;
+      border: 1px solid rgba(245, 230, 200, 0.8);
+      border-radius: 50%;
+      animation: bd-pin-ring 2.0s ease-out infinite;
+      box-shadow: 0 0 6px rgba(245, 230, 200, 0.22);
+    }
+    i:nth-child(2) { animation-delay: 0.7s; }
+  }
 
-  &__indicator {
-    position: relative;
-    width: 20px; height: 20px;
-    flex: 0 0 auto;
-  }
-  &__pulse {
-    position: absolute; inset: 0;
-    border: 1.5px solid rgba(245, 230, 200, 0.75);
-    border-radius: 50%;
-    animation: bd-pin-pulse 2.0s ease-out infinite;
-    box-shadow: 0 0 6px rgba(245, 230, 200, 0.25);
-    &--delayed { animation-delay: 0.6s; }
-  }
   &__dot {
-    position: absolute; inset: 6px;
-    background: rgba(245, 230, 200, 0.96);
+    position: absolute; inset: 18px;
+    background: rgba(245, 230, 200, 0.95);
     border-radius: 50%;
-    box-shadow: 0 0 10px rgba(245, 230, 200, 0.5);
+    box-shadow: 0 0 14px rgba(245, 230, 200, 0.55);
   }
 
   &__label {
-    display: inline-flex; align-items: center; gap: 6px;
-    line-height: 1;
+    position: absolute; left: 50%; bottom: -26px;
+    transform: translateX(-50%);
+    font-size: 11px; letter-spacing: 0.16em; text-transform: lowercase;
+    color: rgba(245, 230, 200, 0.95);
+    white-space: nowrap;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.95), 0 0 18px rgba(0,0,0,0.7);
+    pointer-events: none;
+    opacity: 0; transition: opacity 0.35s ease;
   }
-  &__caret {
-    color: rgba(245, 230, 200, 0.6);
-    font-size: 13px;
-    margin-top: -1px;
-  }
-  &__text { color: rgba(245, 230, 200, 0.95); }
 
-  &:hover,
-  &:focus {
-    background: rgba(20, 22, 22, 0.78);
-    border-color: rgba(245, 230, 200, 0.6);
-  }
-  &:active { transform: scale(0.96) translate(-8px, -50%); }
-  &--left:active { transform: scale(0.96) translate(calc(-100% + 8px), -50%); }
-  &--up:active { transform: scale(0.96) translate(-50%, calc(-100% + 8px)); }
-  &--down:active { transform: scale(0.96) translate(-50%, -8px); }
+  &:hover .bd-pin__label,
+  &:focus .bd-pin__label { opacity: 1; }
 
   &.is-visited {
-    opacity: 0.45;
-    cursor: default;
-    pointer-events: none;
-    .bd-pin__pulse { animation-duration: 3.2s; border-color: rgba(245, 230, 200, 0.3); box-shadow: none; }
-    .bd-pin__dot { background: rgba(245, 230, 200, 0.4); box-shadow: none; }
+    .bd-pin__rings i {
+      border-color: rgba(245, 230, 200, 0.32);
+      box-shadow: none;
+      animation-duration: 3.2s;
+    }
+    .bd-pin__dot {
+      background: rgba(245, 230, 200, 0.4);
+      box-shadow: none;
+    }
   }
 }
 
-@keyframes bd-pin-pulse {
-  0%   { transform: scale(0.6); opacity: 1; }
-  100% { transform: scale(2.2); opacity: 0; }
+@keyframes bd-pin-ring {
+  0%   { transform: scale(0.5); opacity: 1; }
+  100% { transform: scale(1.7); opacity: 0; }
 }
 
 @keyframes bd-pin-in {
-  from { opacity: 0; transform: translate(-8px, calc(-50% + 8px)); }
+  from { opacity: 0; }
   to   { opacity: 1; }
 }

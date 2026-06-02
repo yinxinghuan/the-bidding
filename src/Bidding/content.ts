@@ -5,14 +5,14 @@ import type { ActDef, ExamineDef, EndingDef } from './types';
 
 export const EXAMINES: Record<string, ExamineDef> = {
   // ACT 1
-  e1: { id: 'e1', src: 'stills/exam_e1_appointment_list.png', captionKey: 'exam.e1', unlockedInActs: [1] },
-  e2: { id: 'e2', src: 'stills/exam_e2_paula_ecg.png',        captionKey: 'exam.e2', unlockedInActs: [1] },
-  e3: { id: 'e3', src: 'stills/exam_e3_payment.png',          captionKey: 'exam.e3', unlockedInActs: [1] },
-  e4: { id: 'e4', src: 'stills/exam_e4_paula_sleeping.png',   captionKey: 'exam.e4', unlockedInActs: [1] },
+  e1: { id: 'e1', src: 'stills/exam_e1_appointment_list.png', captionKey: 'exam.e1', shortKey: 'short.e1', unlockedInActs: [1] },
+  e2: { id: 'e2', src: 'stills/exam_e2_paula_ecg.png',        captionKey: 'exam.e2', shortKey: 'short.e2', unlockedInActs: [1] },
+  e3: { id: 'e3', src: 'stills/exam_e3_payment.png',          captionKey: 'exam.e3', shortKey: 'short.e3', unlockedInActs: [1] },
+  e4: { id: 'e4', src: 'stills/exam_e4_paula_sleeping.png',   captionKey: 'exam.e4', shortKey: 'short.e4', unlockedInActs: [1] },
   // ACT 2 — Mercer's documents on the table
-  e5: { id: 'e5', src: 'stills/exam_e5_mercer_license.png',   captionKey: 'exam.e5', unlockedInActs: [2] },
-  e6: { id: 'e6', src: 'stills/exam_e6_hungarian_donor.png',  captionKey: 'exam.e6', unlockedInActs: [2] },
-  e7: { id: 'e7', src: 'stills/exam_e7_sibiu_clinic.png',     captionKey: 'exam.e7', unlockedInActs: [2] },
+  e5: { id: 'e5', src: 'stills/exam_e5_mercer_license.png',   captionKey: 'exam.e5', shortKey: 'short.e5', unlockedInActs: [2] },
+  e6: { id: 'e6', src: 'stills/exam_e6_hungarian_donor.png',  captionKey: 'exam.e6', shortKey: 'short.e6', unlockedInActs: [2] },
+  e7: { id: 'e7', src: 'stills/exam_e7_sibiu_clinic.png',     captionKey: 'exam.e7', shortKey: 'short.e7', unlockedInActs: [2] },
 };
 
 export const ACTS: Record<number, ActDef> = {

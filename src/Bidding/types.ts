@@ -63,8 +63,9 @@ export interface Flags {
 export interface ExamineDef {
   id: string;
   src: string;            // filename in /public/stills/
-  captionKey: string;
-  unlockedInActs: Act[];  // which acts this card is examinable in
+  captionKey: string;     // longer caption shown beneath the expanded image
+  shortKey: string;       // short label shown in the inline ExamineRow
+  unlockedInActs: Act[];
 }
 
 export interface ActDef {

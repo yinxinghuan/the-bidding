@@ -5,9 +5,11 @@ import type { Act, Phase, BiddingState, Flags, StateMutation } from './types';
 import { ACTS, EXAMINES, INITIAL_STATE, INITIAL_FLAGS } from './content';
 import { t } from './i18n';
 
-import TitleCard from './primitives/TitleCard';
 import HotspotPin from './primitives/HotspotPin';
+import ChoiceList from './primitives/ChoiceList';
 import ExamineCard from './primitives/ExamineCard';
+import ExamineRow from './primitives/ExamineRow';
+import SceneTitle from './primitives/SceneTitle';
 import VideoStage from './primitives/VideoStage';
 
 const BASE = import.meta.env.BASE_URL;
@@ -17,7 +19,7 @@ const frameUrl = (rel: string) => BASE + 'stills/' + rel;
 
 export default function BiddingEngine() {
   const [act, setAct] = useState<Act>(1);
-  const [phase, setPhase] = useState<Phase>('title');
+  const [phase, setPhase] = useState<Phase>('idle');   // start on the hero, no black title card
   const [, setState] = useState<BiddingState>(INITIAL_STATE);
   const [, setFlags] = useState<Flags>(INITIAL_FLAGS);
   const [visited, setVisited] = useState<Set<string>>(new Set());
@@ -26,16 +28,13 @@ export default function BiddingEngine() {
 
   const currentActDef = ACTS[act];
 
-  const onTitleDone = useCallback(() => setPhase('idle'), []);
-
   const onHotspotClick = useCallback((hotspotId: string) => {
     setActiveHotspot(hotspotId);
     setPhase('playing');
   }, []);
 
-  // When the video for a choice ends, AUTO-ADVANCE to the next act in the
-  // story. No continue button — the cinematic flow carries you forward.
-  // If the next act hasn't been authored yet, we show a soft end-of-pilot stub.
+  // Auto-advance after video. No black title card, no continue button — just
+  // a seamless cut to the next act's hero, with SceneTitle fading in as overlay.
   const onVideoEnded = useCallback(() => {
     if (!currentActDef || !activeHotspot) return;
     const def = currentActDef.hotspots.find((h) => h.id === activeHotspot);
@@ -54,7 +53,7 @@ export default function BiddingEngine() {
     }
     setAct(nextAct);
     setVisited(new Set());
-    setPhase('title');
+    setPhase('idle');
   }, [activeHotspot, currentActDef, act]);
 
   const onExamineOpen = useCallback((examineId: string) => {
@@ -69,25 +68,18 @@ export default function BiddingEngine() {
 
   const heroUrl = useMemo(() => stillUrl(currentActDef.hero), [currentActDef]);
 
-  if (phase === 'title') {
-    return (
-      <div className="bd-root">
-        <TitleCard
-          primary={t(currentActDef.titleCard.primaryKey)}
-          secondary={t(currentActDef.titleCard.secondaryKey)}
-          meta={currentActDef.titleCard.metaKey ? t(currentActDef.titleCard.metaKey) : undefined}
-          bgStill={currentActDef.titleCard.bgStill ? stillUrl(currentActDef.titleCard.bgStill) : undefined}
-          onDone={onTitleDone}
-        />
-      </div>
-    );
-  }
-
   return (
     <div className="bd-root">
       <div className="bd-stage">
-        {/* hero (act background, always rendered behind everything) */}
-        <img className="bd-hero" src={heroUrl} alt="" draggable={false} />
+        {/* hero (act background, always rendered behind everything). Fades in
+            softly each time the act changes to feel like a real scene cut. */}
+        <img
+          key={`hero-${act}`}
+          className="bd-hero"
+          src={heroUrl}
+          alt=""
+          draggable={false}
+        />
 
         {/* video plays on top when active */}
         {phase === 'playing' && activeHotspot && (() => {
@@ -104,7 +96,28 @@ export default function BiddingEngine() {
           );
         })()}
 
-        {/* hotspot pins (idle phase only) — pill labels, no bottom choice bar */}
+        {/* In-scene SceneTitle (top-left, fades in then out after ~3s) */}
+        {(phase === 'idle' || phase === 'examining') && (
+          <SceneTitle
+            cycleKey={act}
+            primary={t(currentActDef.titleCard.primaryKey)}
+            secondary={t(currentActDef.titleCard.secondaryKey)}
+            meta={currentActDef.titleCard.metaKey ? t(currentActDef.titleCard.metaKey) : undefined}
+          />
+        )}
+
+        {/* discreet text-only examine row in the top-right */}
+        {phase === 'idle' && currentActDef.examines.length > 0 && (
+          <ExamineRow
+            items={currentActDef.examines
+              .map((eid) => EXAMINES[eid])
+              .filter(Boolean)
+              .map((def) => ({ id: def.id, shortLabel: t(def.shortKey) }))}
+            onPick={onExamineOpen}
+          />
+        )}
+
+        {/* hotspot pins (idle phase only) */}
         {phase === 'idle' && currentActDef.hotspots.map((h) => {
           const pinX = h.left + (h.width  * (h.pinX ?? 50) / 100);
           const pinY = h.top  + (h.height * (h.pinY ?? 50) / 100);
@@ -115,13 +128,12 @@ export default function BiddingEngine() {
               y={pinY}
               label={t(h.labelKey)}
               visited={visited.has(h.id)}
-              labelDir={h.labelDir}
               onClick={() => onHotspotClick(h.id)}
             />
           );
         })}
 
-        {/* examine card overlay */}
+        {/* examine card overlay (modal) */}
         {phase === 'examining' && examining && (() => {
           const def = EXAMINES[examining];
           if (!def) return null;
@@ -134,26 +146,17 @@ export default function BiddingEngine() {
           );
         })()}
 
-        {/* discreet examine row in the top-left corner */}
-        {phase === 'idle' && currentActDef.examines.length > 0 && (
-          <div className="bd-examine-bar">
-            {currentActDef.examines.map((eid) => {
-              const def = EXAMINES[eid]; if (!def) return null;
-              return (
-                <button
-                  key={eid}
-                  className="bd-examine-bar__btn"
-                  onPointerDown={(e) => {
-                    e.preventDefault(); e.stopPropagation();
-                    onExamineOpen(eid);
-                  }}
-                  aria-label={t(def.captionKey)}
-                >
-                  <img src={stillUrl(def.src)} alt="" draggable={false} />
-                </button>
-              );
-            })}
-          </div>
+        {/* bottom typewriter ChoiceList — the readable text affordance for the pins */}
+        {phase === 'idle' && (
+          <ChoiceList
+            hint={t(`hint.act${act}`)}
+            choices={currentActDef.hotspots.map((h) => ({
+              id: h.id,
+              label: t(h.labelKey),
+              visited: visited.has(h.id),
+            }))}
+            onPick={onHotspotClick}
+          />
         )}
 
         {phase === 'done' && (
