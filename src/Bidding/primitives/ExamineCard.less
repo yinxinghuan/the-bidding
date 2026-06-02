@@ -1,0 +1,41 @@
+.bd-examine {
+  position: fixed; inset: 0; z-index: 60;
+  background: rgba(7,9,10,0.92);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  animation: bd-examine-in 0.28s ease-out;
+  cursor: pointer;
+  font-family: 'Courier Prime', 'IBM Plex Mono', 'Menlo', monospace;
+  -webkit-tap-highlight-color: transparent;
+
+  &__inner {
+    position: relative; max-width: min(560px, 92vw); max-height: 86vh;
+    display: flex; flex-direction: column; gap: 10px;
+    cursor: default;
+  }
+  &__img {
+    width: 100%; max-height: 76vh; object-fit: contain;
+    box-shadow: 0 18px 48px rgba(0,0,0,0.75);
+    background: #1a1a1a;
+    // tiny "paper" tone
+    filter: contrast(1.02);
+  }
+  &__caption {
+    color: rgba(217, 210, 194, 0.72); font-size: 11px; letter-spacing: 0.14em;
+    text-transform: uppercase; text-align: center;
+  }
+  &__close {
+    position: absolute; top: 16px; right: 18px;
+    background: transparent; border: 1px solid rgba(217,210,194,0.5);
+    color: rgba(217,210,194,0.85); width: 36px; height: 36px;
+    font-size: 22px; line-height: 1; cursor: pointer;
+    border-radius: 18px;
+    -webkit-tap-highlight-color: transparent;
+    &:active { transform: scale(0.94); }
+  }
+}
+
+@keyframes bd-examine-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}

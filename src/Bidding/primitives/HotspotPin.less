@@ -1,0 +1,64 @@
+.bd-pin {
+  position: absolute;
+  width: 56px; height: 56px;
+  margin: -28px 0 0 -28px;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+  z-index: 5;
+  font-family: 'Courier Prime', 'IBM Plex Mono', 'Menlo', monospace;
+
+  &__rings {
+    position: absolute; inset: 0; pointer-events: none;
+    i {
+      position: absolute; inset: 14px;
+      border: 1px solid rgba(245, 230, 200, 0.7);
+      border-radius: 50%;
+      animation: bd-pin-ring 2.0s ease-out infinite;
+      box-shadow: 0 0 6px rgba(245, 230, 200, 0.18);
+    }
+    i:nth-child(2) { animation-delay: 0.66s; }
+    i:nth-child(3) { animation-delay: 1.32s; }
+  }
+
+  &__dot {
+    position: absolute; inset: 24px;
+    background: rgba(245, 230, 200, 0.95);
+    border-radius: 50%;
+    box-shadow: 0 0 14px rgba(245, 230, 200, 0.55);
+  }
+
+  &__label {
+    position: absolute; left: 50%; bottom: -28px;
+    transform: translateX(-50%);
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(245, 230, 200, 0.95);
+    white-space: nowrap;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.95), 0 0 18px rgba(0,0,0,0.7);
+    pointer-events: none;
+    opacity: 0; transition: opacity 0.35s ease;
+  }
+
+  &:hover .bd-pin__label,
+  &:focus .bd-pin__label { opacity: 1; }
+
+  &.is-visited {
+    .bd-pin__rings i {
+      border-color: rgba(120, 110, 90, 0.45);
+      box-shadow: none;
+      animation-duration: 3.2s;
+    }
+    .bd-pin__dot {
+      background: rgba(120, 110, 90, 0.45);
+      box-shadow: none;
+    }
+  }
+}
+
+@keyframes bd-pin-ring {
+  0%   { transform: scale(0.5); opacity: 1; }
+  100% { transform: scale(1.7); opacity: 0; }
+}

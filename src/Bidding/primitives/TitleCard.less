@@ -1,0 +1,55 @@
+.bd-titlecard {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: #07090a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #d9d2c2;
+  font-family: 'Courier Prime', 'IBM Plex Mono', 'Menlo', monospace;
+  pointer-events: none;
+  animation: bd-titlecard-in 0.4s ease-out forwards, bd-titlecard-out 0.4s ease-in 2.8s forwards;
+
+  &__bg {
+    position: absolute; inset: 0;
+    background-size: cover; background-position: center;
+    filter: blur(8px) brightness(0.32) saturate(0.7);
+    transform: scale(1.05);
+  }
+  &__veil {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at center, rgba(7,9,10,0.25) 0%, rgba(7,9,10,0.7) 60%, rgba(7,9,10,0.92) 100%);
+  }
+  &__text {
+    position: relative; text-align: center; padding: 24px;
+    max-width: 80vw;
+    text-shadow: 0 2px 14px rgba(0,0,0,0.95);
+  }
+  &__primary {
+    font-size: 18px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(217, 210, 194, 0.88); margin-bottom: 12px;
+  }
+  &__rule {
+    width: 56px; height: 1px; background: rgba(217, 210, 194, 0.45);
+    margin: 0 auto 14px;
+  }
+  &__secondary {
+    font-size: 14px; letter-spacing: 0.14em; color: rgba(217, 210, 194, 0.78);
+    margin-bottom: 10px;
+  }
+  &__meta {
+    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: rgba(217, 210, 194, 0.5);
+  }
+}
+
+@keyframes bd-titlecard-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes bd-titlecard-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
