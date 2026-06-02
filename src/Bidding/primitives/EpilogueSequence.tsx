@@ -9,8 +9,12 @@ interface Item {
 interface Props {
   endingTitle: string;
   endingTagline: string;
+  endingLabel: string;       // i18n "— ending —"
   items: Item[];
   finalCard: string;
+  brandSig: string;          // i18n "— THE BIDDING —"
+  beginAgainLabel: string;   // i18n "tap to begin again"
+  tapContinueLabel: string;  // i18n "› tap to continue"
   onComplete: () => void;
   autoMs?: number;
 }
@@ -19,7 +23,10 @@ interface Props {
 // Each still WAITS for its image to finish loading before starting the
 // auto-advance timer. Tap anywhere to advance early.
 export default function EpilogueSequence({
-  endingTitle, endingTagline, items, finalCard, onComplete, autoMs = 5500,
+  endingTitle, endingTagline, endingLabel,
+  items,
+  finalCard, brandSig, beginAgainLabel, tapContinueLabel,
+  onComplete, autoMs = 5500,
 }: Props) {
   // -1 = the opening ending-name card; 0..n-1 = stills; n = final-card
   const [idx, setIdx] = useState(-1);
@@ -57,10 +64,10 @@ export default function EpilogueSequence({
     return (
       <div className="bd-epi" onPointerDown={(e) => { e.preventDefault(); advance(); }}>
         <div className="bd-epi__titlecard">
-          <div className="bd-epi__title-mini">— ending —</div>
+          <div className="bd-epi__title-mini">{endingLabel}</div>
           <div className={`bd-epi__title-main ${revealCaption ? 'is-in' : ''}`}>{endingTitle}</div>
           <div className={`bd-epi__title-tagline ${revealCaption ? 'is-in' : ''}`}>{endingTagline}</div>
-          <div className="bd-epi__continue">› tap to continue</div>
+          <div className="bd-epi__continue">{tapContinueLabel}</div>
         </div>
       </div>
     );
@@ -71,8 +78,8 @@ export default function EpilogueSequence({
       <div className="bd-epi" onPointerDown={(e) => { e.preventDefault(); advance(); }}>
         <div className="bd-epi__finalcard">
           <div className="bd-epi__final-text">{finalCard}</div>
-          <div className="bd-epi__final-sig">— THE BIDDING —</div>
-          <div className="bd-epi__final-cta">tap to begin again</div>
+          <div className="bd-epi__final-sig">{brandSig}</div>
+          <div className="bd-epi__final-cta">{beginAgainLabel}</div>
         </div>
       </div>
     );
@@ -99,7 +106,7 @@ export default function EpilogueSequence({
           <span key={i} className={i <= idx ? 'is-on' : ''} />
         ))}
       </div>
-      {imgLoaded && <div className="bd-epi__continue">› tap to continue</div>}
+      {imgLoaded && <div className="bd-epi__continue">{tapContinueLabel}</div>}
     </div>
   );
 }

@@ -191,6 +191,13 @@ const STRINGS: Record<Locale, Record<string, string>> = {
     'btn.continue': '› continue',
     'btn.examine':  'examine',
     'btn.close':    'close',
+    'ui.docs':              'docs',
+    'ui.tap_continue':      '› tap to continue',
+    'ui.tap_begin_again':   'tap to begin again',
+    'ui.pivot_remembers':   '— she remembers —',
+    'ui.pivot_understands': '— she understands —',
+    'ui.ending_label':      '— ending —',
+    'ui.brand_sig':         '— THE BIDDING —',
   },
   zh: {
     'prologue.p1': '布加勒斯特。1991 年 1 月。',
@@ -347,6 +354,13 @@ const STRINGS: Record<Locale, Record<string, string>> = {
     'btn.continue': '› 继续',
     'btn.examine':  '细看',
     'btn.close':    '关闭',
+    'ui.docs':              '文档',
+    'ui.tap_continue':      '› 点击继续',
+    'ui.tap_begin_again':   '点击重新开始',
+    'ui.pivot_remembers':   '— 她记起来了 —',
+    'ui.pivot_understands': '— 她明白了 —',
+    'ui.ending_label':      '— 结局 —',
+    'ui.brand_sig':         '— THE BIDDING —',
   },
 };
 

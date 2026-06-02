@@ -9,9 +9,12 @@ interface Item {
 interface Props {
   introTitle: string;
   introBody: string;
+  introLabel: string;       // i18n "— she remembers —"
   items: Item[];
   closingTitle: string;
   closingBody: string;
+  closingLabel: string;     // i18n "— she understands —"
+  tapContinueLabel: string; // i18n "› tap to continue"
   onComplete: () => void;
   autoMs?: number;
 }
@@ -21,7 +24,11 @@ interface Props {
 // auto-advance timer (no more flipping past a blank frame).
 // Tap anywhere to advance early.
 export default function PivotSequence({
-  introTitle, introBody, items, closingTitle, closingBody, onComplete, autoMs = 6500,
+  introTitle, introBody, introLabel,
+  items,
+  closingTitle, closingBody, closingLabel,
+  tapContinueLabel,
+  onComplete, autoMs = 6500,
 }: Props) {
   const [idx, setIdx] = useState(-1);
   const [revealCaption, setRevealCaption] = useState(false);
@@ -60,10 +67,10 @@ export default function PivotSequence({
     return (
       <div className="bd-pivot" onPointerDown={(e) => { e.preventDefault(); advance(); }}>
         <div className="bd-pivot__intro">
-          <div className="bd-pivot__intro-mini">— she remembers —</div>
+          <div className="bd-pivot__intro-mini">{introLabel}</div>
           <div className={`bd-pivot__intro-title ${revealCaption ? 'is-in' : ''}`}>{introTitle}</div>
           <div className={`bd-pivot__intro-body ${revealCaption ? 'is-in' : ''}`}>{introBody}</div>
-          <div className="bd-pivot__continue">› tap to continue</div>
+          <div className="bd-pivot__continue">{tapContinueLabel}</div>
         </div>
       </div>
     );
@@ -73,10 +80,10 @@ export default function PivotSequence({
     return (
       <div className="bd-pivot" onPointerDown={(e) => { e.preventDefault(); advance(); }}>
         <div className="bd-pivot__closing">
-          <div className="bd-pivot__closing-mini">— she understands —</div>
+          <div className="bd-pivot__closing-mini">{closingLabel}</div>
           <div className={`bd-pivot__closing-title ${revealCaption ? 'is-in' : ''}`}>{closingTitle}</div>
           <div className={`bd-pivot__closing-body ${revealCaption ? 'is-in' : ''}`}>{closingBody}</div>
-          <div className="bd-pivot__continue">› tap to continue</div>
+          <div className="bd-pivot__continue">{tapContinueLabel}</div>
         </div>
       </div>
     );
@@ -103,7 +110,7 @@ export default function PivotSequence({
           <span key={i} className={i <= idx ? 'is-on' : ''} />
         ))}
       </div>
-      {imgLoaded && <div className="bd-pivot__continue">› tap to continue</div>}
+      {imgLoaded && <div className="bd-pivot__continue">{tapContinueLabel}</div>}
     </div>
   );
 }

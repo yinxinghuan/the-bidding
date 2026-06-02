@@ -185,7 +185,7 @@ export default function BiddingEngine() {
               meta={currentActDef.titleCard.metaKey ? t(currentActDef.titleCard.metaKey) : undefined}
               examines={
                 phase === 'idle' && examineItems.length > 0
-                  ? <ExamineRow items={examineItems} onPick={onExamineOpen} />
+                  ? <ExamineRow items={examineItems} onPick={onExamineOpen} headLabel={t('ui.docs')} />
                   : undefined
               }
             />
@@ -236,12 +236,15 @@ export default function BiddingEngine() {
           <PivotSequence
             introTitle={t('pivot.intro.title')}
             introBody={t('pivot.intro.body')}
+            introLabel={t('ui.pivot_remembers')}
             items={PIVOT_STILLS.map((p) => ({
               src: stillUrl(p.src),
               caption: t(p.captionKey),
             }))}
             closingTitle={t('pivot.closing.title')}
             closingBody={t('pivot.closing.body')}
+            closingLabel={t('ui.pivot_understands')}
+            tapContinueLabel={t('ui.tap_continue')}
             onComplete={onPivotComplete}
           />
         )}
@@ -253,11 +256,15 @@ export default function BiddingEngine() {
             <EpilogueSequence
               endingTitle={t(ed.titleKey)}
               endingTagline={t(ed.taglineKey)}
+              endingLabel={t('ui.ending_label')}
               items={ed.epilogueStills.map((s) => ({
                 src: stillUrl(s.src),
                 caption: t(s.captionKey),
               }))}
               finalCard={t(ed.finalCardKey)}
+              brandSig={t('ui.brand_sig')}
+              beginAgainLabel={t('ui.tap_begin_again')}
+              tapContinueLabel={t('ui.tap_continue')}
               onComplete={onEndingComplete}
             />
           );
