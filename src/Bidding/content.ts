@@ -124,6 +124,7 @@ export const ACTS: Record<number, ActDef> = {
         video: 'act2_h6_probe.mp4',
         endFrame: 'end_act2_h6_probe.png',
         mutation: { caution: +25, mercy: +10 },
+        subtitleKey: 'sub.act2.h6',
       },
     ],
     examines: ['e5', 'e6', 'e7'],
@@ -219,6 +220,7 @@ export const ACTS: Record<number, ActDef> = {
         video: 'act4_h15_ask.mp4',
         endFrame: 'end_act4_h15_ask.png',
         mutation: { truthAccepted: +25, mercy: +15 },
+        subtitleKey: 'sub.act4.h15',
       },
       {
         id: 'act4_h16',
@@ -230,6 +232,7 @@ export const ACTS: Record<number, ActDef> = {
         video: 'act4_h16_declare.mp4',
         endFrame: 'end_act4_h16_declare.png',
         mutation: { truthAccepted: +40, mercy: +30, stefanRefused: true },
+        subtitleKey: 'sub.act4.h16',
       },
     ],
     examines: ['e11', 'e12', 'e13'],

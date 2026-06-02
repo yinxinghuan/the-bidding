@@ -54,6 +54,10 @@ export interface HotspotDef {
   //   `title.act{act+1}.secondary.{consequenceKey}` for the next scene's
   // secondary line — makes the cause-and-effect of this choice visible.
   consequenceKey?: string;
+  // Subtitle for any spoken dialogue in this hotspot's video. Shown 900ms
+  // after the video starts, fades with the video. Plain strings, NOT i18n
+  // keys at this layer — i18n lookup happens in the engine.
+  subtitleKey?: string;
   // If true, after this hotspot's video ends the engine plays the MID-PIVOT
   // reveal sequence (PivotSequence primitive) BEFORE advancing to next act.
   triggersPivot?: boolean;

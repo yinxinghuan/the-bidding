@@ -164,6 +164,11 @@ const STRINGS: Record<Locale, Record<string, string>> = {
     'hot.act2.h5': '"let me think" · go check on her',
     'hot.act2.h6': 'probe · do you really have her?',
 
+    // Spoken-line subtitles (videos with TTS dialogue)
+    'sub.act2.h6': "Doctor — the girl in the file. Do you really have her?",
+    'sub.act4.h15': "Where is she. Where is Sophia.",
+    'sub.act4.h16': "I am going to tell them. The Vance family. All of it.",
+
     // Examine card captions
     'exam.e1': "Elena's appointment list, 8 January 1991",
     'exam.e2': "Paula's ECG · Spitalul Marie Curie",
@@ -318,6 +323,10 @@ const STRINGS: Record<Locale, Record<string, string>> = {
     'hot.act2.h4': '同意 · 把戒指放到桌上',
     'hot.act2.h5': "「让我想想」· 去看看她",
     'hot.act2.h6': '试探 · 你真的有她?',
+
+    'sub.act2.h6': "医生 — 文件里那个女孩, 你真的有她吗?",
+    'sub.act4.h15': "她在哪里。Sophia 在哪里。",
+    'sub.act4.h16': "我要告诉他们。Vance 一家。全部告诉他们。",
 
     'exam.e1': 'Elena 的预约名单, 1991 年 1 月 8 日',
     'exam.e2': "Paula 的心电图 · Marie Curie 医院",

@@ -151,12 +151,14 @@ export default function BiddingEngine() {
           const def = currentActDef.hotspots.find((h) => h.id === activeHotspot);
           if (!def) return null;
           const poster = def.startFrame ? stillUrl(def.startFrame) : heroUrl;
+          const subtitle = def.subtitleKey ? t(def.subtitleKey) : undefined;
           return (
             <VideoStage
               videoSrc={videoUrl(def.video)}
               posterSrc={poster}
               fallbackImg={def.endFrame ? frameUrl(def.endFrame) : heroUrl}
               onEnded={onVideoEnded}
+              subtitle={subtitle}
             />
           );
         })()}
