@@ -32,6 +32,9 @@ const STRINGS: Record<Locale, Record<string, string>> = {
     'title.act1.secondary': "The first buyer. You have a minute before you open. Paula is in the next room — how should the doctor meet her?",
     'title.act1.meta':      "8:58 PM · Tuesday · 8 Jan 1991",
     'hint.act1':            '› three ways to receive her',
+    'hint.act3':            '› three ways to answer him',
+    'hint.act4':            '› four ways to answer the priest',
+    'hint.act5':            '› six possible last calls',
 
     // ─── Scene 2: Mercer is inside (varies by Scene 1 choice) ──────────────
     'title.act2.primary':           'Dr. Karen Mercer is here',
@@ -60,12 +63,16 @@ const STRINGS: Record<Locale, Record<string, string>> = {
     'short.e9': 'the boy',
     'short.e10':'his card',
 
-    // ─── Pivot reveal captions ─────────────────────────────────────────────
-    'pivot.r1': "1980. Polizu. The bracelet they tied around her wrist.",
-    'pivot.r2': "My mother in the maternity ward. The night Paula was born. The Vance family — they were there too.",
-    'pivot.r3': "'Genetic source undetermined.' I underlined this years ago. I never asked.",
-    'pivot.r4': "Father Stefan wrote to my mother in 1981. About the 'donation' she made.",
-    'pivot.r5': "October 14, 1980. The names were crossed out. Paula is not mine. Sophia is.",
+    // ─── Pivot — intro + 5 reveal captions + closing ──────────────────────
+    'pivot.intro.title': "Antonescu is gone. Elena walks into Paula's bedroom.",
+    'pivot.intro.body':  "From under Paula's bed she drags out her mother-in-law's old wooden keepsake box. There is something in it she has not let herself open in eleven years.",
+    'pivot.r1': "Paula's hospital ID bracelet. October 14, 1980. Polizu maternity ward, Bucharest. P-1014-07.",
+    'pivot.r2': "Her mother in the maternity hallway that night, holding the newborn. Behind her, by the other doorway — a tall American man and his Romanian wife. The Vance family. They were there too.",
+    'pivot.r3': "Paula's 1986 cardiology chart. 'Genetic source undetermined — neither parent shows family history.' Elena underlined it years ago. She never asked why.",
+    'pivot.r4': "A 1981 letter from Father Stefan to Elena's mother-in-law. He thanks her for the family's 'donation' — and says the church has put the money to good use.",
+    'pivot.r5': "The Polizu birth registry page from October 14, 1980. Two infants, ten minutes apart. The names PAULA and SOPHIA have been crossed out and switched — in the same hand that originally wrote them.",
+    'pivot.closing.title': "The child she has raised is not biologically hers.",
+    'pivot.closing.body':  "Paula is Maria Vance's daughter — the heart defect runs in the Vance family, not in Elena's. Elena's biological daughter, named Sophia at birth, was given to the Vances eleven years ago and is now in California. Father Stefan arranged the swap. Elena's mother-in-law was paid.",
 
     // ─── Scene 4 (Stefan) ──────────────────────────────────────────────────
     'title.act4.primary':   'The power has gone out',
@@ -192,6 +199,9 @@ const STRINGS: Record<Locale, Record<string, string>> = {
     'title.act1.secondary': '第一个买家。你还有一分钟才开门。Paula 在隔壁房间 — 你想让医生怎么看见她?',
     'title.act1.meta':      '晚 8:58 · 周二 · 1991 年 1 月 8 日',
     'hint.act1':            '› 三种接客方式',
+    'hint.act3':            '› 三种回应 Antonescu 的方式',
+    'hint.act4':            '› 四种回应神父的方式',
+    'hint.act5':            '› 六个可能的最后一通电话',
 
     'title.act2.primary':           'Mercer 医生进来了',
     'title.act2.secondary.hidden':  '她不知道这间公寓里有孩子。她要两万美元现金, 今晚, 换一颗心。',
@@ -216,11 +226,15 @@ const STRINGS: Record<Locale, Record<string, string>> = {
     'short.e9': '男孩',
     'short.e10':'名片',
 
-    'pivot.r1': '1980 年。Polizu。他们绑在她手腕上的那个手环。',
-    'pivot.r2': '产科走廊里的妈妈。Paula 出生那一晚。Vance 一家 — 他们也在。',
-    'pivot.r3': "「遗传源待查」。我多年前用红笔划过这一行。我从没问过。",
-    'pivot.r4': '神父 Stefan 1981 年给妈妈的信。讲她家「捐助」的那笔钱。',
-    'pivot.r5': '1980 年 10 月 14 日。两个名字被划掉对调了。Paula 不是我的。Sophia 才是。',
+    'pivot.intro.title': 'Antonescu 走了。Elena 走进 Paula 的卧室。',
+    'pivot.intro.body':  '她从 Paula 的床底, 拖出婆婆留下的旧木盒。盒子里有什么, 她已经十一年没让自己打开过。',
+    'pivot.r1': 'Paula 出生时医院系在她手腕上的塑料 ID 手环。1980 年 10 月 14 日。布加勒斯特 Polizu 妇产医院。编号 P-1014-07。',
+    'pivot.r2': '婆婆那晚在产科走廊里, 抱着新生的婴儿。背景的另一道门旁 — 一个高个子美国男人和他的罗马尼亚妻子。Vance 一家。他们那晚也在。',
+    'pivot.r3': 'Paula 1986 年的心病记录。「遗传源待查 — 父母双方都无家族史。」Elena 当年用红笔划了这一行。她从没问过为什么。',
+    'pivot.r4': 'Stefan 神父 1981 年写给婆婆的信。感谢她家「捐助」的那笔钱, 并说教会已经把钱用在了好的地方。',
+    'pivot.r5': '1980 年 10 月 14 日 Polizu 医院的出生登记表。两个婴儿, 间隔十分钟。「PAULA」和「SOPHIA」两个名字被划掉, 互相对调 — 划掉用的是登记员原本写名字时同一支笔。',
+    'pivot.closing.title': 'Elena 养大的孩子, 不是她亲生的。',
+    'pivot.closing.body':  'Paula 是 Maria Vance 的亲生女儿 — 那个心脏缺陷遗传自 Vance 家, 不在 Elena 家。Elena 自己亲生的女儿, 出生时叫 Sophia, 十一年前被交给了 Vance 一家, 现在在加州。神父 Stefan 安排了这次调包。婆婆收了钱。',
 
     'title.act4.primary':   '停电了',
     'title.act4.secondary': '神父 Stefan Costa, 1980 年 Paula 出生那晚在 Polizu 的人。他从加州带来了一个家庭。他文件袋里的东西, 你已经知道是什么。',

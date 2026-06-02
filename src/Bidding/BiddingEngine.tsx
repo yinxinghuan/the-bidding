@@ -231,13 +231,17 @@ export default function BiddingEngine() {
           />
         )}
 
-        {/* Mid-pivot reveal — overlays the scene with the 5 evidence stills */}
+        {/* Mid-pivot reveal — intro + 5 evidence stills + closing realization */}
         {phase === 'pivot' && (
           <PivotSequence
+            introTitle={t('pivot.intro.title')}
+            introBody={t('pivot.intro.body')}
             items={PIVOT_STILLS.map((p) => ({
               src: stillUrl(p.src),
               caption: t(p.captionKey),
             }))}
+            closingTitle={t('pivot.closing.title')}
+            closingBody={t('pivot.closing.body')}
             onComplete={onPivotComplete}
           />
         )}

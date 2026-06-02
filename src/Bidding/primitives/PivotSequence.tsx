@@ -7,36 +7,68 @@ interface Item {
 }
 
 interface Props {
+  introTitle: string;
+  introBody: string;
   items: Item[];
+  closingTitle: string;
+  closingBody: string;
   onComplete: () => void;
-  autoMs?: number;     // auto-advance after this many ms per item (default 4500)
+  autoMs?: number;
 }
 
-// MID-PIVOT reveal sequence: a series of stills appearing one at a time
-// with a Joan-Didion-style caption, dark backdrop. Tap to advance early.
-// After the last still, calls onComplete (engine then transitions to ACT 4).
-export default function PivotSequence({ items, onComplete, autoMs = 4500 }: Props) {
-  const [idx, setIdx] = useState(0);
+// MID-PIVOT reveal: an intro card explaining what Elena is doing, then a
+// series of stills with captions, then a closing card with the realization.
+// Tap to advance early.
+export default function PivotSequence({
+  introTitle, introBody, items, closingTitle, closingBody, onComplete, autoMs = 6500,
+}: Props) {
+  // -1 = intro card; 0..n-1 = stills; n = closing card; n+1 = done
+  const [idx, setIdx] = useState(-1);
   const [revealCaption, setRevealCaption] = useState(false);
 
   const advance = useCallback(() => {
-    if (idx >= items.length - 1) {
+    if (idx >= items.length) {
       onComplete();
-    } else {
-      setRevealCaption(false);
-      setIdx((i) => i + 1);
+      return;
     }
+    setRevealCaption(false);
+    setIdx((i) => i + 1);
   }, [idx, items.length, onComplete]);
 
   useEffect(() => {
+    const isIntro = idx === -1;
+    const isClosing = idx === items.length;
+    const dwell = isIntro ? 4500 : isClosing ? 7000 : autoMs;
     const t1 = window.setTimeout(() => setRevealCaption(true), 700);
-    const t2 = window.setTimeout(advance, autoMs);
+    const t2 = window.setTimeout(advance, dwell);
     return () => { window.clearTimeout(t1); window.clearTimeout(t2); };
-  }, [idx, advance, autoMs]);
+  }, [idx, advance, autoMs, items.length]);
 
-  if (idx >= items.length) return null;
+  if (idx === -1) {
+    return (
+      <div className="bd-pivot" onPointerDown={(e) => { e.preventDefault(); advance(); }}>
+        <div className="bd-pivot__intro">
+          <div className="bd-pivot__intro-mini">— she remembers —</div>
+          <div className={`bd-pivot__intro-title ${revealCaption ? 'is-in' : ''}`}>{introTitle}</div>
+          <div className={`bd-pivot__intro-body ${revealCaption ? 'is-in' : ''}`}>{introBody}</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (idx >= items.length) {
+    return (
+      <div className="bd-pivot" onPointerDown={(e) => { e.preventDefault(); advance(); }}>
+        <div className="bd-pivot__closing">
+          <div className="bd-pivot__closing-mini">— she understands —</div>
+          <div className={`bd-pivot__closing-title ${revealCaption ? 'is-in' : ''}`}>{closingTitle}</div>
+          <div className={`bd-pivot__closing-body ${revealCaption ? 'is-in' : ''}`}>{closingBody}</div>
+        </div>
+      </div>
+    );
+  }
+
   const item = items[idx];
-
   return (
     <div className="bd-pivot" onPointerDown={(e) => { e.preventDefault(); advance(); }}>
       <img
@@ -46,9 +78,7 @@ export default function PivotSequence({ items, onComplete, autoMs = 4500 }: Prop
         alt=""
         draggable={false}
       />
-      <div className={`bd-pivot__caption ${revealCaption ? 'is-in' : ''}`}>
-        {item.caption}
-      </div>
+      <div className={`bd-pivot__caption ${revealCaption ? 'is-in' : ''}`}>{item.caption}</div>
       <div className="bd-pivot__progress" aria-hidden>
         {items.map((_, i) => (
           <span key={i} className={i <= idx ? 'is-on' : ''} />
