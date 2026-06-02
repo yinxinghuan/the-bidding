@@ -54,6 +54,14 @@ export interface HotspotDef {
   //   `title.act{act+1}.secondary.{consequenceKey}` for the next scene's
   // secondary line — makes the cause-and-effect of this choice visible.
   consequenceKey?: string;
+  // If true, after this hotspot's video ends the engine plays the MID-PIVOT
+  // reveal sequence (PivotSequence primitive) BEFORE advancing to next act.
+  triggersPivot?: boolean;
+}
+
+export interface PivotStillDef {
+  src: string;
+  captionKey: string;
 }
 
 export interface Flags {

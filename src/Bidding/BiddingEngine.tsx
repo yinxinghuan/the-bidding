@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from 'react';
 import './BiddingEngine.less';
 
 import type { Act, Phase, BiddingState, Flags, StateMutation } from './types';
-import { ACTS, EXAMINES, INITIAL_STATE, INITIAL_FLAGS } from './content';
+import { ACTS, EXAMINES, INITIAL_STATE, INITIAL_FLAGS, PIVOT_STILLS } from './content';
 import { t } from './i18n';
 
 import HotspotPin from './primitives/HotspotPin';
@@ -12,6 +12,7 @@ import ExamineRow from './primitives/ExamineRow';
 import SceneTitle from './primitives/SceneTitle';
 import VideoStage from './primitives/VideoStage';
 import Prologue from './primitives/Prologue';
+import PivotSequence from './primitives/PivotSequence';
 
 const BASE = import.meta.env.BASE_URL;
 const stillUrl = (rel: string) => BASE + rel;
@@ -50,6 +51,15 @@ export default function BiddingEngine() {
     setActiveHotspot(null);
     if (def.consequenceKey) setLastConsequence(def.consequenceKey);
 
+    // If this hotspot triggers the mid-pivot, divert into the PivotSequence
+    // BEFORE auto-advancing. The sequence handles its own onComplete which
+    // then advances to the next act.
+    if (def.triggersPivot) {
+      setFlags((prev) => ({ ...prev, pivotTriggered: true }));
+      setPhase('pivot');
+      return;
+    }
+
     const nextAct = (def.advanceTo ?? (act + 1)) as Act;
     if (nextAct > 5 || !ACTS[nextAct]) {
       setPhase('done');
@@ -59,6 +69,17 @@ export default function BiddingEngine() {
     setVisited(new Set());
     setPhase('idle');
   }, [activeHotspot, currentActDef, act]);
+
+  const onPivotComplete = useCallback(() => {
+    const nextAct = (act + 1) as Act;
+    if (nextAct > 5 || !ACTS[nextAct]) {
+      setPhase('done');
+      return;
+    }
+    setAct(nextAct);
+    setVisited(new Set());
+    setPhase('idle');
+  }, [act]);
 
   const onExamineOpen = useCallback((examineId: string) => {
     setExamining(examineId);
@@ -180,6 +201,17 @@ export default function BiddingEngine() {
               visited: visited.has(h.id),
             }))}
             onPick={onHotspotClick}
+          />
+        )}
+
+        {/* Mid-pivot reveal — overlays the scene with the 5 evidence stills */}
+        {phase === 'pivot' && (
+          <PivotSequence
+            items={PIVOT_STILLS.map((p) => ({
+              src: stillUrl(p.src),
+              caption: t(p.captionKey),
+            }))}
+            onComplete={onPivotComplete}
           />
         )}
 

@@ -42,10 +42,35 @@ const STRINGS: Record<Locale, Record<string, string>> = {
     'title.act2.meta':              '9:04 PM',
     'hint.act2':                    "› three ways to answer her",
 
-    // To-be-continued panel (after act 2 in the pilot build)
+    // ─── Scene 3 (Antonescu) ───────────────────────────────────────────────
+    'title.act3.primary':   "He doesn't take off the coat",
+    'title.act3.secondary': "Virgil Antonescu, ex-Securitate. He says he can get a heart for $5,000 and one signed lie. His bodyguard is waiting in your stairwell.",
+    'title.act3.meta':      '10:30 PM · second buyer',
+
+    // ─── Scene 3 hotspot labels (Antonescu choices) ────────────────────────
+    'hot.act3.h7': 'ask him for proof',
+    'hot.act3.h8': 'sign what he gives you',
+    'hot.act3.h9': "first, take my husband's name off your list",
+
+    // ─── Scene 3 examines ──────────────────────────────────────────────────
+    'exam.e8':  "the Securitate informant list · 1989",
+    'exam.e9':  "Andrei Popescu, 4th grade · 1990",
+    'exam.e10': "Antonescu's business card",
+    'short.e8': 'the list',
+    'short.e9': 'the boy',
+    'short.e10':'his card',
+
+    // ─── Pivot reveal captions ─────────────────────────────────────────────
+    'pivot.r1': "1980. Polizu. The bracelet they tied around her wrist.",
+    'pivot.r2': "My mother in the maternity ward. The night Paula was born. The Vance family — they were there too.",
+    'pivot.r3': "'Genetic source undetermined.' I underlined this years ago. I never asked.",
+    'pivot.r4': "Father Stefan wrote to my mother in 1981. About the 'donation' she made.",
+    'pivot.r5': "October 14, 1980. The names were crossed out. Paula is not mine. Sophia is.",
+
+    // To-be-continued panel (still shown after ACT 3 pivot until ACT 4 ships)
     'tbc.title':  'to be continued',
-    'tbc.body':   'In the next act, the ex-Securitate officer arrives. Then the Russian. Then the priest with the truth Elena will not be able to take back. Six endings, depending on what she is willing to trade tonight.',
-    'tbc.note':   'ACT 3 — 5 are being built. Come back soon.',
+    'tbc.body':   'Father Stefan is on his way up the stairs. He does not know that Elena has found the registry page. He is bringing the same secret he buried in 1980 — and an American family that wants their daughter back.',
+    'tbc.note':   'ACT 4 — 5 next. Come back soon.',
 
     // ACT 1 hotspot labels (player choices)
     'hot.act1.h1': "lock Paula's door before you open",
@@ -101,9 +126,30 @@ const STRINGS: Record<Locale, Record<string, string>> = {
     'title.act2.meta':              '9:04 PM',
     'hint.act2':                    '› 三种回应方式',
 
+    'title.act3.primary':   '他没脱大衣',
+    'title.act3.secondary': '前 Securitate 大队长 Virgil Antonescu。他说能搞到一颗心 — 五千美元加一份假证词。他的保镖在你楼道里等。',
+    'title.act3.meta':      '10:30 PM · 第二个买家',
+
+    'hot.act3.h7': '让他给你证据',
+    'hot.act3.h8': '签下他给你的东西',
+    'hot.act3.h9': '先把我丈夫的名字从你的名单上划掉',
+
+    'exam.e8':  '1989 年 Securitate 线人名单',
+    'exam.e9':  'Andrei Popescu · 四年级 · 1990',
+    'exam.e10': 'Antonescu 的名片',
+    'short.e8': '名单',
+    'short.e9': '男孩',
+    'short.e10':'名片',
+
+    'pivot.r1': '1980 年。Polizu。他们绑在她手腕上的那个手环。',
+    'pivot.r2': '产科走廊里的妈妈。Paula 出生那一晚。Vance 一家 — 他们也在。',
+    'pivot.r3': "「遗传源待查」。我多年前用红笔划过这一行。我从没问过。",
+    'pivot.r4': '神父 Stefan 1981 年给妈妈的信。讲她家「捐助」的那笔钱。',
+    'pivot.r5': '1980 年 10 月 14 日。两个名字被划掉对调了。Paula 不是我的。Sophia 才是。',
+
     'tbc.title':  '未完待续',
-    'tbc.body':   '下一幕里, 前 Securitate 大队长来了。然后是俄国人。然后是带着 Elena 收不回真相的神父。6 种结局, 看她今晚愿意拿什么换。',
-    'tbc.note':   'ACT 3 — 5 正在制作中。请稍后回来。',
+    'tbc.body':   '神父 Stefan 正在爬上楼梯。他不知道 Elena 已经翻出了那份出生登记。他带着自己 1980 年埋下的同一个秘密 — 还有一个想要回亲生女儿的美国家庭。',
+    'tbc.note':   '接下来 ACT 4 — 5。请稍后回来。',
 
     'hot.act1.h1': '先锁好 Paula 的门, 再开',
     'hot.act1.h2': '把她带到桌边, 让医生看见',

@@ -1,7 +1,7 @@
 // The Bidding — declarative act content. ACT 1 only for the pilot batch.
 // Each hotspot is (videoToPlay, stateMutation). Engine reads this and dispatches.
 
-import type { ActDef, ExamineDef, EndingDef } from './types';
+import type { ActDef, ExamineDef, EndingDef, PivotStillDef } from './types';
 
 export const EXAMINES: Record<string, ExamineDef> = {
   // ACT 1
@@ -13,7 +13,20 @@ export const EXAMINES: Record<string, ExamineDef> = {
   e5: { id: 'e5', src: 'stills/exam_e5_mercer_license.png',   captionKey: 'exam.e5', shortKey: 'short.e5', unlockedInActs: [2] },
   e6: { id: 'e6', src: 'stills/exam_e6_hungarian_donor.png',  captionKey: 'exam.e6', shortKey: 'short.e6', unlockedInActs: [2] },
   e7: { id: 'e7', src: 'stills/exam_e7_sibiu_clinic.png',     captionKey: 'exam.e7', shortKey: 'short.e7', unlockedInActs: [2] },
+  // ACT 3 — Antonescu's documents
+  e8: { id: 'e8', src: 'stills/exam_e8_securitate_list.png',  captionKey: 'exam.e8', shortKey: 'short.e8', unlockedInActs: [3] },
+  e9: { id: 'e9', src: 'stills/exam_e9_andrei_school_photo.png', captionKey: 'exam.e9', shortKey: 'short.e9', unlockedInActs: [3] },
+  e10:{ id: 'e10',src: 'stills/exam_e10_antonescu_card.png',  captionKey: 'exam.e10',shortKey: 'short.e10',unlockedInActs: [3] },
 };
+
+// ─── Mid-pivot reveal sequence (after any ACT 3 choice) ──────────────────
+export const PIVOT_STILLS: PivotStillDef[] = [
+  { src: 'stills/pivot_r1_polizu_id.png',       captionKey: 'pivot.r1' },
+  { src: 'stills/pivot_r2_hospital_photo.png',  captionKey: 'pivot.r2' },
+  { src: 'stills/pivot_r3_medical_chart.png',   captionKey: 'pivot.r3' },
+  { src: 'stills/pivot_r4_stefan_letter.png',   captionKey: 'pivot.r4' },
+  { src: 'stills/pivot_r5_birth_registry.png',  captionKey: 'pivot.r5' },
+];
 
 export const ACTS: Record<number, ActDef> = {
   1: {
@@ -110,6 +123,55 @@ export const ACTS: Record<number, ActDef> = {
       },
     ],
     examines: ['e5', 'e6', 'e7'],
+  },
+
+  3: {
+    id: 3,
+    titleCard: {
+      primaryKey: 'title.act3.primary',
+      secondaryKey: 'title.act3.secondary',
+      metaKey: 'title.act3.meta',
+    },
+    hero: 'hero_act3.png',
+    hotspots: [
+      {
+        id: 'act3_h7',
+        // Antonescu's coat pocket — where the photo will fall from
+        top: 50, left: 78, width: 1, height: 1,
+        pinX: 50, pinY: 50,
+        labelDir: 'left',
+        labelKey: 'hot.act3.h7',
+        video: 'act3_h7_refuse.mp4',
+        endFrame: 'end_act3_h7_refuse.png',
+        mutation: { mercy: +30, caution: +10 },
+        triggersPivot: true,
+      },
+      {
+        id: 'act3_h8',
+        // The Securitate page on the table
+        top: 70, left: 50, width: 1, height: 1,
+        pinX: 50, pinY: 50,
+        labelDir: 'down',
+        labelKey: 'hot.act3.h8',
+        video: 'act3_h8_sign.mp4',
+        endFrame: 'end_act3_h8_sign.png',
+        mutation: { caution: -15, truthAccepted: +10 },
+        triggersPivot: true,
+      },
+      {
+        id: 'act3_h9',
+        // Elena's body / her side
+        top: 45, left: 25, width: 1, height: 1,
+        pinX: 50, pinY: 50,
+        labelDir: 'right',
+        labelKey: 'hot.act3.h9',
+        video: 'act3_h9_counter.mp4',
+        endFrame: 'end_act3_h9_counter.png',
+        mutation: { caution: +25, mercy: -10 },
+        triggersPivot: true,
+      },
+    ],
+    examines: ['e8', 'e9', 'e10'],
   },
 };
 
