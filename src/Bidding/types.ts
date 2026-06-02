@@ -36,8 +36,12 @@ export interface HotspotDef {
   // affordance pin position within the bbox (% of bbox)
   pinX?: number; pinY?: number;
   labelKey: string;       // i18n key for choice label
+  // pre-beat start frame: shown for ~200ms before video plays (snap-cut).
+  // Required when the beat's opening state ≠ hero composition.
+  // See feedback_fmv_5s_one_beat.md "compositional-gap rule".
+  startFrame?: string;    // filename in /public/stills/
   video: string;          // filename in /public/videos/
-  endFrame?: string;      // filename in /public/stills/ (fallback if video fails)
+  endFrame?: string;      // filename in /public/stills/ (also fallback if video fails)
   mutation: StateMutation;
   unlockIf?: (state: BiddingState, flags: Flags) => boolean;
 }

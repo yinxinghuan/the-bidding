@@ -37,6 +37,9 @@ export const ACTS: Record<number, ActDef> = {
         top: 40, left: 35, width: 30, height: 35,
         pinX: 50, pinY: 60,
         labelKey: 'hot.act1.h2',
+        // Snap-cut: hero → this pre-beat still → video. Beat opens with Paula
+        // already in Elena's arms beside the chair, eliding the carry-over.
+        startFrame: 'stills/start_act1_h2_at_chair.png',
         video: 'act1_h2_dress.mp4',
         endFrame: 'end_act1_h2_dressed.png',
         mutation: { caution: -5, mercy: -5 },
@@ -47,6 +50,9 @@ export const ACTS: Record<number, ActDef> = {
         top: 30, left: 8, width: 50, height: 22,
         pinX: 30, pinY: 50,
         labelKey: 'hot.act1.h3',
+        // Snap-cut: hero → this pre-beat still → video. Beat opens with Elena
+        // already at the doorway, hand on the door, eliding the walk-over.
+        startFrame: 'stills/start_act1_h3_at_door.png',
         video: 'act1_h3_glimpse.mp4',
         endFrame: 'end_act1_h3_glimpse.png',
         mutation: {},

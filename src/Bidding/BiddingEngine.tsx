@@ -95,14 +95,16 @@ export default function BiddingEngine() {
           draggable={false}
         />
 
-        {/* video plays on top when active */}
+        {/* video plays on top when active. Per-hotspot startFrame (compositional-
+            gap rule) becomes the poster so the snap-cut from hero is seamless. */}
         {phase === 'playing' && activeHotspot && (() => {
           const def = currentActDef.hotspots.find((h) => h.id === activeHotspot);
           if (!def) return null;
+          const poster = def.startFrame ? stillUrl(def.startFrame) : heroUrl;
           return (
             <VideoStage
               videoSrc={videoUrl(def.video)}
-              posterSrc={heroUrl}
+              posterSrc={poster}
               fallbackImg={def.endFrame ? frameUrl(def.endFrame) : heroUrl}
               onEnded={onVideoEnded}
             />
