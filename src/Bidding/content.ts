@@ -17,6 +17,10 @@ export const EXAMINES: Record<string, ExamineDef> = {
   e8: { id: 'e8', src: 'stills/exam_e8_securitate_list.png',  captionKey: 'exam.e8', shortKey: 'short.e8', unlockedInActs: [3] },
   e9: { id: 'e9', src: 'stills/exam_e9_andrei_school_photo.png', captionKey: 'exam.e9', shortKey: 'short.e9', unlockedInActs: [3] },
   e10:{ id: 'e10',src: 'stills/exam_e10_antonescu_card.png',  captionKey: 'exam.e10',shortKey: 'short.e10',unlockedInActs: [3] },
+  // ACT 4 — Stefan's Vance family file
+  e11:{ id: 'e11',src: 'stills/exam_e11_vance_family.png',    captionKey: 'exam.e11',shortKey: 'short.e11',unlockedInActs: [4] },
+  e12:{ id: 'e12',src: 'stills/exam_e12_sophia_recent.png',   captionKey: 'exam.e12',shortKey: 'short.e12',unlockedInActs: [4] },
+  e13:{ id: 'e13',src: 'stills/exam_e13_adoption_papers.png', captionKey: 'exam.e13',shortKey: 'short.e13',unlockedInActs: [4] },
 };
 
 // ─── Mid-pivot reveal sequence (after any ACT 3 choice) ──────────────────
@@ -172,6 +176,63 @@ export const ACTS: Record<number, ActDef> = {
       },
     ],
     examines: ['e8', 'e9', 'e10'],
+  },
+
+  4: {
+    id: 4,
+    titleCard: {
+      primaryKey: 'title.act4.primary',
+      secondaryKey: 'title.act4.secondary',
+      metaKey: 'title.act4.meta',
+    },
+    hero: 'hero_act4.png',
+    hotspots: [
+      {
+        id: 'act4_h13',
+        // door of the apartment (offscreen left) — Elena pointing there
+        top: 50, left: 12, width: 1, height: 1,
+        pinX: 50, pinY: 50,
+        labelDir: 'right',
+        labelKey: 'hot.act4.h13',
+        video: 'act4_h13_push.mp4',
+        endFrame: 'end_act4_h13_push.png',
+        mutation: { truthAccepted: -30, mercy: -20 },
+      },
+      {
+        id: 'act4_h14',
+        // the manila folder on the table
+        top: 68, left: 50, width: 1, height: 1,
+        pinX: 50, pinY: 50,
+        labelDir: 'down',
+        labelKey: 'hot.act4.h14',
+        video: 'act4_h14_folder.mp4',
+        endFrame: 'end_act4_h14_folder.png',
+        mutation: { truthAccepted: +20 },
+      },
+      {
+        id: 'act4_h15',
+        // Stefan's face — Elena leans in to ask
+        top: 45, left: 78, width: 1, height: 1,
+        pinX: 50, pinY: 50,
+        labelDir: 'left',
+        labelKey: 'hot.act4.h15',
+        video: 'act4_h15_ask.mp4',
+        endFrame: 'end_act4_h15_ask.png',
+        mutation: { truthAccepted: +25, mercy: +15 },
+      },
+      {
+        id: 'act4_h16',
+        // Elena's own body — declaring the truth
+        top: 38, left: 32, width: 1, height: 1,
+        pinX: 50, pinY: 50,
+        labelDir: 'right',
+        labelKey: 'hot.act4.h16',
+        video: 'act4_h16_declare.mp4',
+        endFrame: 'end_act4_h16_declare.png',
+        mutation: { truthAccepted: +40, mercy: +30, stefanRefused: true },
+      },
+    ],
+    examines: ['e11', 'e12', 'e13'],
   },
 };
 

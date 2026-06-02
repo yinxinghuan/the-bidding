@@ -67,10 +67,29 @@ const STRINGS: Record<Locale, Record<string, string>> = {
     'pivot.r4': "Father Stefan wrote to my mother in 1981. About the 'donation' she made.",
     'pivot.r5': "October 14, 1980. The names were crossed out. Paula is not mine. Sophia is.",
 
-    // To-be-continued panel (still shown after ACT 3 pivot until ACT 4 ships)
+    // ─── Scene 4 (Stefan) ──────────────────────────────────────────────────
+    'title.act4.primary':   'The power has gone out',
+    'title.act4.secondary': "Father Stefan Costa, the priest who was at Polizu the night Paula was born. He has come with a family from California. You already know what is in his folder.",
+    'title.act4.meta':      '11:30 PM · oil lamp only',
+
+    // ─── Scene 4 hotspot labels ────────────────────────────────────────────
+    'hot.act4.h13': "make him leave",
+    'hot.act4.h14': "open the folder",
+    'hot.act4.h15': "ask him: where is she?",
+    'hot.act4.h16': "tell him: I will tell the Vance family everything",
+
+    // ─── Scene 4 examines ──────────────────────────────────────────────────
+    'exam.e11': "the Vance family · Carmel, 1990",
+    'exam.e12': "Sophia Vance · 5th grade · 1990",
+    'exam.e13': "adoption consent — California state",
+    'short.e11': 'the family',
+    'short.e12': 'Sophia',
+    'short.e13': 'the papers',
+
+    // Updated to-be-continued (post ACT 4)
     'tbc.title':  'to be continued',
-    'tbc.body':   'Father Stefan is on his way up the stairs. He does not know that Elena has found the registry page. He is bringing the same secret he buried in 1980 — and an American family that wants their daughter back.',
-    'tbc.note':   'ACT 4 — 5 next. Come back soon.',
+    'tbc.body':   'Paula\'s monitor will start to alarm at 1:00 AM. By then Elena will have decided which of the four buyers — or none of them — to call back. And whether to call Carmel-by-the-Sea, where a girl who is biologically hers is asleep in someone else\'s house.',
+    'tbc.note':   'ACT 5 + the six endings next. Come back soon.',
 
     // ACT 1 hotspot labels (player choices)
     'hot.act1.h1': "lock Paula's door before you open",
@@ -147,9 +166,25 @@ const STRINGS: Record<Locale, Record<string, string>> = {
     'pivot.r4': '神父 Stefan 1981 年给妈妈的信。讲她家「捐助」的那笔钱。',
     'pivot.r5': '1980 年 10 月 14 日。两个名字被划掉对调了。Paula 不是我的。Sophia 才是。',
 
+    'title.act4.primary':   '停电了',
+    'title.act4.secondary': '神父 Stefan Costa, 1980 年 Paula 出生那晚在 Polizu 的人。他从加州带来了一个家庭。他文件袋里的东西, 你已经知道是什么。',
+    'title.act4.meta':      '11:30 PM · 只剩油灯',
+
+    'hot.act4.h13': '让他走',
+    'hot.act4.h14': '打开文件袋',
+    'hot.act4.h15': '问他: 她在哪里?',
+    'hot.act4.h16': '告诉他: 我要把全部告诉 Vance 一家',
+
+    'exam.e11': 'Vance 一家 · Carmel · 1990',
+    'exam.e12': 'Sophia Vance · 五年级 · 1990',
+    'exam.e13': '收养同意书 · 加州',
+    'short.e11': '一家人',
+    'short.e12': 'Sophia',
+    'short.e13': '同意书',
+
     'tbc.title':  '未完待续',
-    'tbc.body':   '神父 Stefan 正在爬上楼梯。他不知道 Elena 已经翻出了那份出生登记。他带着自己 1980 年埋下的同一个秘密 — 还有一个想要回亲生女儿的美国家庭。',
-    'tbc.note':   '接下来 ACT 4 — 5。请稍后回来。',
+    'tbc.body':   '凌晨 1 点 Paula 的监护仪会响警报。到那时, Elena 需要决定回拨四个买家里的哪一个 — 或者哪个都不回 — 以及要不要打那个加州号码, 那边一个跟她有血缘的女孩在另一个家睡着。',
+    'tbc.note':   '接下来 ACT 5 + 6 个结局。请稍后回来。',
 
     'hot.act1.h1': '先锁好 Paula 的门, 再开',
     'hot.act1.h2': '把她带到桌边, 让医生看见',
